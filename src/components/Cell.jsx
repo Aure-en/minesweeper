@@ -1,9 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function Cell({ content, played, flagged }) {
+function Cell({ content, played, flagged, x, y }) {
   return (
-    <CellStyled content={content} played={played} flagged={flagged}>{ played && !Number.isNaN(content) ? content : '' }</CellStyled>
+    <CellStyled
+      content={content}
+      played={played}
+      flagged={flagged}
+      data-x={x}
+      data-y={y}
+    >
+      {content}
+    </CellStyled>
   );
 }
 

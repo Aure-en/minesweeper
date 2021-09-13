@@ -1,30 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import Cell from './Cell';
-import useGrid from '../hooks/useGrid';
 
-function Grid({ rows, columns, mines }) {
-  const { grid } = useGrid({ rows, columns, mines });
-  const gridElement = [];
-  grid.forEach((row, rowIndex) => {
-    row.forEach((cell, cellIndex) => {
-      const keyValue = rowIndex * row.length + cellIndex;
-      const content = cell;
-      const played = cell === null;
-      const flagged = cell === 'F';
-      gridElement.push(
+function Grid({ grid }) {
+  return (
+    <GridStyled columnCount={grid[0].length}>
+      { grid.map((row, rowIndex) => row.map((cell, cellIndex) => (
         <Cell
-          key={keyValue}
+          key={`${rowIndex} ${cellIndex}`}
+          x={rowIndex}
+          y={cellIndex}
           content={content}
           played={played}
           flagged={flagged}
-        />,
-      );
-    });
-  });
-  return (
-    <GridStyled columnCount={columns}>
-      { gridElement }
+        />
+      )))}
     </GridStyled>
   );
 }
