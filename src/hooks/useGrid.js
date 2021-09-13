@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 
 function useGrid({ rows, columns, mines }) {
-  const INITIAL = Array(rows)
-    .fill(null)
-    .map(() => Array(columns).fill(null));
-
-  const [initialGrid, setInitialGrid] = useState([...INITIAL]);
-  const [playGrid, setPlayGrid] = useState([...INITIAL]);
+  const [playGrid, setPlayGrid] = useState(
+    Array(rows)
+      .fill(null)
+      .map(() => Array(columns).fill(null)),
+  );
+  const [initialGrid, setInitialGrid] = useState(
+    Array(rows)
+      .fill(null)
+      .map(() => Array(columns).fill(null)),
+  );
 
   const generateCoords = (rows, columns) => {
     const x = Math.floor(Math.random() * rows);
@@ -72,10 +76,7 @@ function useGrid({ rows, columns, mines }) {
           let adjacentMines = 0;
 
           // Left
-          if (
-            column > 0
-            && gridWithNumbers[row][column - 1] === 'X'
-          ) {
+          if (column > 0 && gridWithNumbers[row][column - 1] === 'X') {
             adjacentMines += 1;
           }
 
@@ -88,10 +89,7 @@ function useGrid({ rows, columns, mines }) {
           }
 
           // Top
-          if (
-            row > 0
-            && gridWithNumbers[row - 1][column] === 'X'
-          ) {
+          if (row > 0 && gridWithNumbers[row - 1][column] === 'X') {
             adjacentMines += 1;
           }
 
@@ -106,7 +104,8 @@ function useGrid({ rows, columns, mines }) {
           // Top-left
           if (
             row > 0
-            && column > 0 && gridWithNumbers[row - 1][column - 1] === 'X'
+            && column > 0
+            && gridWithNumbers[row - 1][column - 1] === 'X'
           ) {
             adjacentMines += 1;
           }
@@ -147,7 +146,9 @@ function useGrid({ rows, columns, mines }) {
   };
 
   useEffect(() => {
-    const emptyGrid = [...INITIAL];
+    const emptyGrid = Array(rows)
+      .fill(null)
+      .map(() => Array(columns).fill(null));
     const gridWithMines = addMinesToGrid(emptyGrid, mines);
     const gridWithNumbers = addNumbersToGrid(gridWithMines);
     setInitialGrid(gridWithNumbers);
