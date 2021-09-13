@@ -1,10 +1,12 @@
 import React from 'react';
+import useGrid from '../hooks/useGrid';
 import Grid from './Grid';
 
 function Game() {
+  const { playGrid } = useGrid({ rows: 16, columns: 14, mines: 40 });
   return (
     <div>
-      <Grid rows={16} columns={16} mines={40} />
+      <Grid grid={playGrid} />
     </div>
   );
 }

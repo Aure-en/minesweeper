@@ -5,7 +5,8 @@ function useGrid({ rows, columns, mines }) {
     .fill(null)
     .map(() => Array(columns).fill(null));
 
-  const [grid, setGrid] = useState([...INITIAL]);
+  const [initialGrid, setInitialGrid] = useState([...INITIAL]);
+  const [playGrid, setPlayGrid] = useState([...INITIAL]);
 
   const generateCoords = (rows, columns) => {
     const x = Math.floor(Math.random() * rows);
@@ -17,7 +18,7 @@ function useGrid({ rows, columns, mines }) {
    * Check if there is already a mine on a cell
    * @param {array} grid (2 dimensional-array representing the game grid) ;
    * @param {object} cell ({ x, y }) - Cell position ;
-   * @returns {boolean} true if the cell is available, false
+   * @returns {boolean} true if the cell is available, false otherwise.
    */
   const checkAvailable = (grid, cell) => {
     if (grid[cell.x][cell.y]) {
@@ -137,7 +138,7 @@ function useGrid({ rows, columns, mines }) {
             adjacentMines += 1;
           }
 
-          gridWithNumbers[row][column] = adjacentMines || null;
+          gridWithNumbers[row][column] = adjacentMines;
         }
       }
     }
@@ -149,11 +150,11 @@ function useGrid({ rows, columns, mines }) {
     const emptyGrid = [...INITIAL];
     const gridWithMines = addMinesToGrid(emptyGrid, mines);
     const gridWithNumbers = addNumbersToGrid(gridWithMines);
-    setGrid(gridWithNumbers);
+    setInitialGrid(gridWithNumbers);
   }, []);
 
   return {
-    grid,
+    playGrid,
   };
 }
 

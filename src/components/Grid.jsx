@@ -1,12 +1,10 @@
 import React from 'react';
-import useGrid from '../hooks/useGrid';
 import Cell from './Cell';
 
-function Grid({ rows, columns, mines }) {
-  const { grid } = useGrid({ rows, columns, mines });
-
+function Grid({ grid }) {
+  console.log(grid);
   return (
-    // Affiche la grille
+    // Display the grid
     <></>
   );
 }
