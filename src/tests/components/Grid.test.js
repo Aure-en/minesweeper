@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Grid from '../components/Grid';
+import Grid from '../../components/Grid';
 
 describe('Grid renders properly', () => {
   test('Empty grid', () => {
