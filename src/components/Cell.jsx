@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 function Cell({ content, played, flagged, x, y }) {
   return (
@@ -34,6 +35,22 @@ const handleColor = (content, played, flagged) => {
     color = '#ADD8E6';
   }
   return color;
+};
+
+Cell.defaultProps = {
+  content: 0,
+  played: false,
+  flagged: false,
+  x: null,
+  y: null,
+};
+
+Cell.propTypes = {
+  content: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['X', 'F', null])]),
+  played: PropTypes.bool,
+  flagged: PropTypes.bool,
+  x: PropTypes.number,
+  y: PropTypes.number,
 };
 
 const CellStyled = styled.div`
