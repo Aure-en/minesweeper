@@ -3,11 +3,17 @@ import useGame from '../hooks/useGame';
 import Grid from './Grid';
 
 function Game() {
-  const { playGrid, gameState, handleLeftClickOnCell, handleRightClickOnCell } = useGame({
+  const {
+    playGrid,
+    gameState,
+    handleLeftClickOnCell,
+    handleRightClickOnCell,
+  } = useGame({
     rows: 16,
     columns: 14,
     mines: 40,
   });
+
   return (
     <div>
       <Grid

@@ -158,6 +158,13 @@ function useGame({ rows, columns, mines }) {
     setPlayGrid(newPlayGrid);
   };
 
+  /**
+   * Function to call when right click on cell
+   * @param {event} event need event to prevent default behaviour
+   * @param {int} rowIndex
+   * @param {int} columnIndex
+   * @returns {void}
+   */
   const handleRightClickOnCell = (event, rowIndex, columnIndex) => {
     event.preventDefault();
     const content = playGrid[rowIndex][columnIndex];
@@ -183,14 +190,14 @@ function useGame({ rows, columns, mines }) {
         } else if (content === 'X') {
           newState = 'defeat';
           setGameState(newState);
-          window.alert('defeat');
+          window.alert('defeat'); // temporary
           return;
         }
       }
     }
     if (remainingCellCount === mines) {
       newState = 'victory';
-      window.alert('victory');
+      window.alert('victory'); // temporary
     }
     setGameState(newState);
   };
