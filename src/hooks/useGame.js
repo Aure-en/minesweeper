@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function useGrid({ rows, columns, mines }) {
+function useGame({ rows, columns, mines }) {
   const [playGrid, setPlayGrid] = useState(
     Array(rows)
       .fill(null)
@@ -159,4 +159,4 @@ function useGrid({ rows, columns, mines }) {
   };
 }
 
-export default useGrid;
+export default useGame;
