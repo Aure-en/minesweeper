@@ -1,14 +1,14 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import useGrid from '../../hooks/useGrid';
+import useGame from '../../hooks/useGame';
 
-describe('Play', () => {
+describe('Play - tryCell', () => {
   test('Should update playGrid after a play on a cell that has never been selected before', () => {
     // Initialize a grid.
     const ROWS = 3;
     const COLUMNS = 3;
     const MINES = 3;
 
-    const { result } = renderHook(() => useGrid({
+    const { result } = renderHook(() => useGame({
       rows: ROWS,
       columns: COLUMNS,
       mines: MINES,
@@ -21,7 +21,7 @@ describe('Play', () => {
     expect(result.current.playGrid[x][y]).toBe(null);
 
     // Play on [x][y]
-    act(() => result.current.play(x, y));
+    act(() => result.current.tryCell(x, y));
 
     // Checks that playGrid[x][y] content updated to match initialGrid[x][y].
     expect(result.current.playGrid[x][y]).toBe(result.current.initialGrid[x][y]);
@@ -33,7 +33,7 @@ describe('Play', () => {
     const COLUMNS = 3;
     const MINES = 3;
 
-    const { result } = renderHook(() => useGrid({
+    const { result } = renderHook(() => useGame({
       rows: ROWS,
       columns: COLUMNS,
       mines: MINES,
@@ -43,11 +43,11 @@ describe('Play', () => {
     const y = Math.floor(Math.random() * COLUMNS);
 
     // Play once
-    act(() => result.current.play(x, y));
+    act(() => result.current.tryCell(x, y));
     const content = result.current.playGrid[x][y];
 
     // Replay and checks that nothing has changed.
-    act(() => result.current.play(x, y));
+    act(() => result.current.tryCell(x, y));
     expect(result.current.playGrid[x][y]).toBe(content);
   });
 
@@ -57,7 +57,7 @@ describe('Play', () => {
     const COLUMNS = 3;
     const MINES = 3;
 
-    const { result } = renderHook(() => useGrid({
+    const { result } = renderHook(() => useGame({
       rows: ROWS,
       columns: COLUMNS,
       mines: MINES,
@@ -77,7 +77,7 @@ describe('Play', () => {
     ];
     result.current.initialGrid = [...gridWithEmpty];
 
-    act(() => result.current.play(0, 0));
+    act(() => result.current.tryCell(0, 0));
 
     expect(result.current.playGrid).toBe([
       [0, 0, 0],
@@ -94,7 +94,7 @@ describe('Play', () => {
     ];
     result.current.initialGrid = [...gridWithEmpty];
 
-    act(() => result.current.play(1, 1));
+    act(() => result.current.tryCell(1, 1));
 
     expect(result.current.playGrid).toBe([
       [1, 1, 1, 1],
@@ -102,6 +102,39 @@ describe('Play', () => {
       [1, 0, 1, null],
       [1, 1, 1, null],
     ]);
+  });
+});
+
+describe('Flag - flagCell', () => {
+  // Initialize a grid
+  let result;
+  const ROWS = 3;
+  const COLUMNS = 3;
+  const MINES = 3;
+
+  beforeEach(() => {
+    result = renderHook(() => useGame({
+      rows: ROWS,
+      columns: COLUMNS,
+      mines: MINES,
+    })).result;
+  });
+
+  test('Can flag an empty cell', () => {
+    result.current.playGrid = [[null]];
+    act(() => result.current.tryCell(0, 0));
+    expect(result.current.playGrid[0][0]).toBe('F');
+  });
+
+  test.each([
+    ['X'],
+    ['F'],
+    [0],
+    [1],
+  ])('Cannot flag a selected cell', (content) => {
+    result.current.playGrid = [[content]];
+    act(() => result.current.tryCell(0, 0));
+    expect(result.current.playGrid[0][0]).toBe(content);
   });
 });
 
@@ -113,7 +146,7 @@ describe('Defeat', () => {
   const MINES = 3;
 
   beforeEach(() => {
-    result = renderHook(() => useGrid({
+    result = renderHook(() => useGame({
       rows: ROWS,
       columns: COLUMNS,
       mines: MINES,
@@ -127,7 +160,7 @@ describe('Defeat', () => {
       ['F', 1, null],
     ];
 
-    expect(result.current.checkResult(result.current.playGrid)).toBeFalsy();
+    expect(result.current.checkResult(result.current.playGrid)).toBe('defeat');
   });
 
   test('A mine causes defeat even if the board is full', () => {
@@ -137,7 +170,7 @@ describe('Defeat', () => {
       [1, 2, 2],
     ];
 
-    expect(result.current.checkResult(result.current.playGrid)).toBeFalsy();
+    expect(result.current.checkResult(result.current.playGrid)).toBe('defeat');
   });
 });
 
@@ -149,7 +182,7 @@ describe('Victory', () => {
   const MINES = 3;
 
   beforeEach(() => {
-    result = renderHook(() => useGrid({
+    result = renderHook(() => useGame({
       rows: ROWS,
       columns: COLUMNS,
       mines: MINES,
@@ -163,7 +196,7 @@ describe('Victory', () => {
       ['F', 1, 0],
     ];
 
-    expect(result.current.checkResult(result.current.playGrid)).toBeTruthy();
+    expect(result.current.checkResult(result.current.playGrid)).toBe('victory');
   });
 
   test('Victory if all number cells are revealed, even if not all mines cells are flagged', () => {
@@ -173,7 +206,7 @@ describe('Victory', () => {
       ['F', 1, 0],
     ];
 
-    expect(result.current.checkResult(result.current.playGrid)).toBeTruthy();
+    expect(result.current.checkResult(result.current.playGrid)).toBe('victory');
 
     result.current.playGrid = [
       [null, 1, 0],
@@ -181,6 +214,6 @@ describe('Victory', () => {
       [null, 1, 0],
     ];
 
-    expect(result.current.checkResult(result.current.playGrid)).toBeTruthy();
+    expect(result.current.checkResult(result.current.playGrid)).toBe('victory');
   });
 });
