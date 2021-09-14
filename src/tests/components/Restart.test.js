@@ -1,5 +1,7 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Title from '../../components/Restart';
+import Restart from '../../components/Restart';
+import '@testing-library/jest-dom';
 
 test('It renders properly', () => {
   render(<Restart />);
