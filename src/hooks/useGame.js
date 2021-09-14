@@ -11,6 +11,7 @@ function useGame({ rows, columns, mines }) {
       .fill(null)
       .map(() => Array(columns).fill(null)),
   );
+  const [gameState, setGameState] = useState('playing');
 
   const generateCoords = (rows, columns) => {
     const x = Math.floor(Math.random() * rows);
@@ -145,6 +146,89 @@ function useGame({ rows, columns, mines }) {
     return gridWithNumbers;
   };
 
+  /**
+   * Function to call when left click on cell
+   * @param {int} rowIndex
+   * @param {int} columnIndex
+   * @returns {void}
+   */
+  const toggleFlag = (isFlagged, rowIndex, columnIndex) => {
+    const newPlayGrid = [...playGrid];
+    newPlayGrid[rowIndex][columnIndex] = isFlagged ? null : 'F';
+    setPlayGrid(newPlayGrid);
+  };
+
+  /**
+   * Function to call when right click on cell
+   * @param {event} event need event to prevent default behaviour
+   * @param {int} rowIndex
+   * @param {int} columnIndex
+   * @returns {void}
+   */
+  const handleRightClickOnCell = (event, rowIndex, columnIndex) => {
+    event.preventDefault();
+    const content = playGrid[rowIndex][columnIndex];
+    const isFlagged = content === 'F';
+    if (gameState === 'playing' && (isFlagged || content === null)) {
+      toggleFlag(isFlagged, rowIndex, columnIndex);
+    }
+  };
+
+  /**
+   * Update gameState (victory/defeat/playing)
+   * @returns {void}
+   */
+  const checkResult = () => {
+    let newState = 'playing';
+    let remainingCellCount = 0;
+    for (let rowIndex = 0; rowIndex < rows; rowIndex += 1) {
+      for (let columnIndex = 0; columnIndex < columns; columnIndex += 1) {
+        const content = playGrid[rowIndex][columnIndex];
+        if (content === 'F' || content === null) {
+          // Count cells that weren't tested
+          remainingCellCount += 1;
+        } else if (content === 'X') {
+          newState = 'defeat';
+          setGameState(newState);
+          window.alert('defeat'); // temporary
+          return;
+        }
+      }
+    }
+    if (remainingCellCount === mines) {
+      newState = 'victory';
+      window.alert('victory'); // temporary
+    }
+    setGameState(newState);
+  };
+
+  /**
+   * Check content of cell at (rowIndex, columnIndex) in initGrid and change state of playGrid
+   * @param {int} rowIndex
+   * @param {int} columnIndex
+   * @returns {int}
+   */
+  const tryCell = (rowIndex, columnIndex) => {
+    const newPlayGrid = [...playGrid];
+    const content = initialGrid[rowIndex][columnIndex];
+    newPlayGrid[rowIndex][columnIndex] = content;
+    setPlayGrid(newPlayGrid);
+    checkResult();
+  };
+
+  /**
+   * Function to call when left click on cell
+   * @param {int} rowIndex
+   * @param {int} columnIndex
+   * @returns {void}
+   */
+  const handleLeftClickOnCell = (rowIndex, columnIndex) => {
+    if (gameState !== 'playing' || playGrid[rowIndex][columnIndex] !== null) {
+      return;
+    }
+    tryCell(rowIndex, columnIndex);
+  };
+
   useEffect(() => {
     const emptyGrid = Array(rows)
       .fill(null)
@@ -156,6 +240,9 @@ function useGame({ rows, columns, mines }) {
 
   return {
     playGrid,
+    gameState,
+    handleLeftClickOnCell,
+    handleRightClickOnCell,
   };
 }
 

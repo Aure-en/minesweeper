@@ -6,7 +6,13 @@ import Message from './Message';
 import Restart from './Restart';
 
 function Game() {
-  const { playGrid, reset, gameState } = useGame({
+  const {
+    playGrid,
+    gameState,
+    reset,
+    handleLeftClickOnCell,
+    handleRightClickOnCell,
+  } = useGame({
     rows: 16,
     columns: 14,
     mines: 40,
@@ -16,7 +22,13 @@ function Game() {
     <div>
       <Title />
       <Message gameState={gameState} reset={reset} />
-      <Grid grid={playGrid} />
+      <Grid
+        grid={playGrid}
+        onClick={(rowIndex, columnIndex) => handleLeftClickOnCell(rowIndex, columnIndex)}
+        onContextMenu={
+          (event, rowIndex, columnIndex) => handleRightClickOnCell(event, rowIndex, columnIndex)
+        }
+      />
       <Restart reset={reset} />
     </div>
   );
