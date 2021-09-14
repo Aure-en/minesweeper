@@ -174,21 +174,23 @@ function useGame({ rows, columns, mines }) {
   const checkResult = () => {
     let newState = 'playing';
     let remainingCellCount = 0;
-
     for (let rowIndex = 0; rowIndex < rows; rowIndex += 1) {
       for (let columnIndex = 0; columnIndex < columns; columnIndex += 1) {
-        if (playGrid[rowIndex][columnIndex] === null) {
+        const content = playGrid[rowIndex][columnIndex];
+        if (content === 'F' || content === null) {
+          // Count cells that weren't tested
           remainingCellCount += 1;
-        } else if (playGrid[rowIndex][columnIndex] === 'X') {
+        } else if (content === 'X') {
           newState = 'defeat';
           setGameState(newState);
+          window.alert('defeat');
           return;
         }
       }
     }
-
-    if (remainingCellCount === 0) {
+    if (remainingCellCount === mines) {
       newState = 'victory';
+      window.alert('victory');
     }
     setGameState(newState);
   };
