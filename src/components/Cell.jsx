@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function Cell({ content, played, flagged, x, y }) {
+function Cell({ content, played, flagged, x, y, onClick }) {
   return (
     <CellStyled
       content={content}
@@ -10,6 +10,7 @@ function Cell({ content, played, flagged, x, y }) {
       flagged={flagged}
       data-x={x}
       data-y={y}
+      onClick={onClick}
     >
       {content}
     </CellStyled>
@@ -43,6 +44,7 @@ Cell.defaultProps = {
   flagged: false,
   x: null,
   y: null,
+  onClick: () => {},
 };
 
 Cell.propTypes = {
@@ -51,6 +53,7 @@ Cell.propTypes = {
   flagged: PropTypes.bool,
   x: PropTypes.number,
   y: PropTypes.number,
+  onClick: PropTypes.func,
 };
 
 const CellStyled = styled.div`

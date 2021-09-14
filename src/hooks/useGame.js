@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function useGrid({ rows, columns, mines }) {
+function useGame({ rows, columns, mines }) {
   const [playGrid, setPlayGrid] = useState(
     Array(rows)
       .fill(null)
@@ -11,6 +11,7 @@ function useGrid({ rows, columns, mines }) {
       .fill(null)
       .map(() => Array(columns).fill(null)),
   );
+  const [gameState, setGameState] = useState('playing');
 
   const generateCoords = (rows, columns) => {
     const x = Math.floor(Math.random() * rows);
@@ -145,6 +146,55 @@ function useGrid({ rows, columns, mines }) {
     return gridWithNumbers;
   };
 
+  const checkResult = () => {
+    let newState = 'playing';
+    let remainingCellCount = 0;
+
+    for (let rowIndex = 0; rowIndex < rows; rowIndex += 1) {
+      for (let columnIndex = 0; columnIndex < columns; columnIndex += 1) {
+        if (playGrid[rowIndex][columnIndex] === null) {
+          remainingCellCount += 1;
+        } else if (playGrid[rowIndex][columnIndex] === 'X') {
+          newState = 'defeat';
+          setGameState(newState);
+          return;
+        }
+      }
+    }
+
+    if (remainingCellCount === 0) {
+      newState = 'victory';
+    }
+    setGameState(newState);
+  };
+
+  /**
+   * Check content of cell at (rowIndex, columnIndex) in initGrid and change state of playGrid
+   * @param {int} rowIndex
+   * @param {int} columnIndex
+   * @returns {int}
+   */
+  const tryCell = (rowIndex, columnIndex) => {
+    const newPlayGrid = [...playGrid];
+    const content = initialGrid[rowIndex][columnIndex];
+    newPlayGrid[rowIndex][columnIndex] = content;
+    setPlayGrid(newPlayGrid);
+    checkResult();
+  };
+
+  /**
+   * Function to call when left click on cell
+   * @param {int} rowIndex
+   * @param {int} columnIndex
+   * @returns {void}
+   */
+  const handleLeftClickOnCell = (rowIndex, columnIndex) => {
+    if (gameState !== 'playing' || playGrid[rowIndex][columnIndex] !== null) {
+      return;
+    }
+    tryCell(rowIndex, columnIndex);
+  };
+
   useEffect(() => {
     const emptyGrid = Array(rows)
       .fill(null)
@@ -156,7 +206,9 @@ function useGrid({ rows, columns, mines }) {
 
   return {
     playGrid,
+    gameState,
+    handleLeftClickOnCell,
   };
 }
 
-export default useGrid;
+export default useGame;

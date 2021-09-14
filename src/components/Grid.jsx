@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Cell from './Cell';
 
-function Grid({ grid }) {
+function Grid({ grid, onClick }) {
   return (
     <GridStyled columnCount={grid[0].length}>
       { grid.map((row, rowIndex) => row.map((cell, cellIndex) => (
@@ -14,6 +14,7 @@ function Grid({ grid }) {
           content={cell}
           played={cell !== null}
           flagged={cell === 'F'}
+          onClick={() => onClick(rowIndex, cellIndex)}
         />
       )))}
     </GridStyled>
@@ -21,11 +22,13 @@ function Grid({ grid }) {
 }
 
 Grid.defaultProps = {
-  grid: [[null]],
+  grid: [[]],
+  onClick: () => {},
 };
 
 Grid.propTypes = {
   grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['X', 'F', null])]))),
+  onClick: PropTypes.func,
 };
 
 const GridStyled = styled.div`

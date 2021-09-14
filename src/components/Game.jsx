@@ -1,12 +1,19 @@
 import React from 'react';
-import useGrid from '../hooks/useGrid';
+import useGame from '../hooks/useGame';
 import Grid from './Grid';
 
 function Game() {
-  const { playGrid } = useGrid({ rows: 16, columns: 14, mines: 40 });
+  const { playGrid, gameState, handleLeftClickOnCell } = useGame({
+    rows: 16,
+    columns: 14,
+    mines: 40,
+  });
   return (
     <div>
-      <Grid grid={playGrid} />
+      <Grid
+        grid={playGrid}
+        onClick={(rowIndex, columnIndex) => handleLeftClickOnCell(rowIndex, columnIndex)}
+      />
     </div>
   );
 }
