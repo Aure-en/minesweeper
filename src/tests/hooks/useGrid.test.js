@@ -50,10 +50,8 @@ describe('Play', () => {
     act(() => result.current.play(x, y));
     expect(result.current.playGrid[x][y]).toBe(content);
   });
-});
 
-describe('When clicking on an empty cell, all the surrounded empty cells are revealed in playGrid', () => {
-  test('Works when the area is in a corner', () => {
+  test('When clicking on an empty cell, all the surrounded empty cells are revealed in playGrid', () => {
     // Initialize a grid.
     const ROWS = 3;
     const COLUMNS = 3;
@@ -65,15 +63,20 @@ describe('When clicking on an empty cell, all the surrounded empty cells are rev
       mines: MINES,
     }));
 
-    // Define a grid to get some empty cells
-    const gridWithEmpty = [
+    /**
+     * Define grid with empty cells area
+     * Click on one of the empty cells.
+     * Check that the surrounding empty area has been revealed.
+     */
+
+    // Test 1
+    let gridWithEmpty = [
       [0, 0, 0],
       [0, 1, 1],
       [1, 'X', 1],
     ];
     result.current.initialGrid = [...gridWithEmpty];
 
-    // Play on [0][0]
     act(() => result.current.play(0, 0));
 
     expect(result.current.playGrid).toBe([
@@ -81,22 +84,9 @@ describe('When clicking on an empty cell, all the surrounded empty cells are rev
       [0, 1, null],
       [1, null, null],
     ]);
-  });
 
-  test('Works when the area is fully surrounded by numbers', () => {
-    // Initialize a grid.
-    const ROWS = 4;
-    const COLUMNS = 4;
-    const MINES = 4;
-
-    const { result } = renderHook(() => useGrid({
-      rows: ROWS,
-      columns: COLUMNS,
-      mines: MINES,
-    }));
-
-    // Define a grid to get some empty cells
-    const gridWithEmpty = [
+    // Test 2
+    gridWithEmpty = [
       [1, 1, 1, 1],
       [1, 0, 0, 1],
       [1, 0, 1, 1],
@@ -104,8 +94,7 @@ describe('When clicking on an empty cell, all the surrounded empty cells are rev
     ];
     result.current.initialGrid = [...gridWithEmpty];
 
-    // Play on [0][0]
-    act(() => result.current.play(0, 0));
+    act(() => result.current.play(1, 1));
 
     expect(result.current.playGrid).toBe([
       [1, 1, 1, 1],
