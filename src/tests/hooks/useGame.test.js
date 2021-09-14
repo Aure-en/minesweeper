@@ -217,3 +217,41 @@ describe('Victory', () => {
     expect(result.current.checkResult(result.current.playGrid)).toBe('victory');
   });
 });
+
+describe('Playing', () => {
+  // Initialize a grid.
+  let result;
+  const ROWS = 3;
+  const COLUMNS = 3;
+  const MINES = 3;
+
+  beforeEach(() => {
+    result = renderHook(() => useGame({
+      rows: ROWS,
+      columns: COLUMNS,
+      mines: MINES,
+    })).result;
+
+    result.current.initialGrid = [
+      ['X', 'X', 'X'],
+      [1, 2, 1],
+      [0, 0, 0],
+    ];
+  });
+
+  test.each([
+    [
+      [null, 'X', 'X'],
+      [1, 2, 1],
+      [0, 0, 0],
+    ],
+    [
+      ['F', null, 'F'],
+      [1, 2, null],
+      [null, 0, null],
+    ],
+  ])('If all mines have not been discovered and no mine has been triggered, the game continues', (playGrid) => {
+    result.current.playGrid = playGrid;
+    expect(result.current.checkResult(result.current.playGrid)).toBe('playing');
+  });
+});
