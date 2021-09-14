@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Cell from './Cell';
 
 function Grid({ grid }) {
@@ -10,14 +11,22 @@ function Grid({ grid }) {
           key={`${rowIndex} ${cellIndex}`}
           x={rowIndex}
           y={cellIndex}
-          content={content}
-          played={played}
-          flagged={flagged}
+          content={cell}
+          played={cell !== null}
+          flagged={cell === 'F'}
         />
       )))}
     </GridStyled>
   );
 }
+
+Grid.defaultProps = {
+  grid: [[null]],
+};
+
+Grid.propTypes = {
+  grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['X', 'F', null])]))),
+};
 
 const GridStyled = styled.div`
   display: grid;
