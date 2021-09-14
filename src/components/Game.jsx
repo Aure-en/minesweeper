@@ -3,7 +3,7 @@ import useGame from '../hooks/useGame';
 import Grid from './Grid';
 
 function Game() {
-  const { playGrid, gameState, handleLeftClickOnCell } = useGame({
+  const { playGrid, gameState, handleLeftClickOnCell, handleRightClickOnCell } = useGame({
     rows: 16,
     columns: 14,
     mines: 40,
@@ -13,6 +13,9 @@ function Game() {
       <Grid
         grid={playGrid}
         onClick={(rowIndex, columnIndex) => handleLeftClickOnCell(rowIndex, columnIndex)}
+        onContextMenu={
+          (event, rowIndex, columnIndex) => handleRightClickOnCell(event, rowIndex, columnIndex)
+        }
       />
     </div>
   );

@@ -146,6 +146,31 @@ function useGame({ rows, columns, mines }) {
     return gridWithNumbers;
   };
 
+  /**
+   * Function to call when left click on cell
+   * @param {int} rowIndex
+   * @param {int} columnIndex
+   * @returns {void}
+   */
+  const toggleFlag = (isFlagged, rowIndex, columnIndex) => {
+    const newPlayGrid = [...playGrid];
+    newPlayGrid[rowIndex][columnIndex] = isFlagged ? null : 'F';
+    setPlayGrid(newPlayGrid);
+  };
+
+  const handleRightClickOnCell = (event, rowIndex, columnIndex) => {
+    event.preventDefault();
+    const content = playGrid[rowIndex][columnIndex];
+    const isFlagged = content === 'F';
+    if (gameState === 'playing' && (isFlagged || content === null)) {
+      toggleFlag(isFlagged, rowIndex, columnIndex);
+    }
+  };
+
+  /**
+   * Update gameState (victory/defeat/playing)
+   * @returns {void}
+   */
   const checkResult = () => {
     let newState = 'playing';
     let remainingCellCount = 0;
@@ -208,6 +233,7 @@ function useGame({ rows, columns, mines }) {
     playGrid,
     gameState,
     handleLeftClickOnCell,
+    handleRightClickOnCell,
   };
 }
 

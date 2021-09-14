@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function Cell({ content, played, flagged, x, y, onClick }) {
+function Cell({ content, played, flagged, x, y, onClick, onContextMenu }) {
   return (
     <CellStyled
       content={content}
@@ -11,6 +11,7 @@ function Cell({ content, played, flagged, x, y, onClick }) {
       data-x={x}
       data-y={y}
       onClick={onClick}
+      onContextMenu={onContextMenu}
     >
       {content}
     </CellStyled>
@@ -45,6 +46,7 @@ Cell.defaultProps = {
   x: null,
   y: null,
   onClick: () => {},
+  onContextMenu: () => {},
 };
 
 Cell.propTypes = {
@@ -54,6 +56,7 @@ Cell.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   onClick: PropTypes.func,
+  onContextMenu: PropTypes.func,
 };
 
 const CellStyled = styled.div`
