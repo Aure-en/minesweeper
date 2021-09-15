@@ -105,7 +105,7 @@ describe('Play - tryCell', () => {
   });
 });
 
-describe('Flag - flagCell', () => {
+describe('Flag - toggleFlag', () => {
   // Initialize a grid
   let result;
   const ROWS = 3;
@@ -122,7 +122,7 @@ describe('Flag - flagCell', () => {
 
   test('Can flag an empty cell', () => {
     result.current.playGrid = [[null]];
-    act(() => result.current.tryCell(0, 0));
+    act(() => result.current.toggleFlag(0, 0));
     expect(result.current.playGrid[0][0]).toBe('F');
   });
 
@@ -133,7 +133,7 @@ describe('Flag - flagCell', () => {
     [1],
   ])('Cannot flag a selected cell', (content) => {
     result.current.playGrid = [[content]];
-    act(() => result.current.tryCell(0, 0));
+    act(() => result.current.toggleFlag(0, 0));
     expect(result.current.playGrid[0][0]).toBe(content);
   });
 });
