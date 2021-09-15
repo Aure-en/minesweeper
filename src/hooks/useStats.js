@@ -10,7 +10,7 @@ function useStats({ grid, mines }) {
     const flags = grid.flat().filter((cell) => cell === 'F').length;
     setFlags(flags);
 
-    const toDiscover = Math.round((grid.flat().filter((cell) => cell !== null).length * 100)
+    const toDiscover = Math.round((grid.flat().filter((cell) => cell === null).length * 100)
       / grid.flat().length);
     setToDiscover(toDiscover);
 

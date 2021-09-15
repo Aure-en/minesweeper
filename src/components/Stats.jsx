@@ -8,14 +8,17 @@ function Stats({ grid, mines }) {
     <div>
       <div>
         Flags:
+        {' '}
         {flags}
       </div>
       <div>
         Unsweeped Mines:
+        {' '}
         {minesLeft}
       </div>
       <div>
         To be discovered:
+        {' '}
         {toDiscover}
         %
       </div>
