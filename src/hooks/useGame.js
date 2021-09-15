@@ -203,17 +203,136 @@ function useGame({ rows, columns, mines }) {
   };
 
   /**
+   * Reveal safe zone around safe cell located at rowIndex, columnIndex
+   * @param {int} rowIndex
+   * @param {int} columnIndex
+   * @returns {void}
+   */
+  const revealZone = (rowIndex, columnIndex) => {
+    const newPlayGrid = [...playGrid];
+
+    let cellsToReveal = [[rowIndex, columnIndex]];
+    let newCellsToReveal = [];
+    let row;
+    let column;
+
+    const hasBeenChecked = Array(rows)
+      .fill(null)
+      .map(() => Array(columns).fill(false));
+
+    do {
+      newCellsToReveal = [];
+      for (let i = 0; i < cellsToReveal.length; i += 1) {
+        [row, column] = cellsToReveal[i];
+        // reveal current cell
+        newPlayGrid[row][column] = initialGrid[row][column];
+        hasBeenChecked[row][column] = true;
+
+        // search for adjacent cells to reveal
+        if (row - 1 >= 0) {
+          if (initialGrid[row - 1][column] === 0
+            && !hasBeenChecked[row - 1][column]) {
+            // add top cell
+            newCellsToReveal.push([row - 1, column]);
+            hasBeenChecked[row - 1][column] = true;
+          }
+          if (column - 1 >= 0 && initialGrid[row - 1][column - 1] === 0
+            && !hasBeenChecked[row - 1][column - 1]) {
+            // add top left hand corner cell
+            newCellsToReveal.push([row - 1, column - 1]);
+            hasBeenChecked[row - 1][column - 1] = true;
+          }
+
+          if (column + 1 < columns
+            && initialGrid[row - 1][column + 1] === 0
+            && !hasBeenChecked[row - 1][column + 1]) {
+            // add top right hand corner cell
+            newCellsToReveal.push([row - 1, column + 1]);
+            hasBeenChecked[row - 1][column + 1] = true;
+          }
+        } else {
+          if (column - 1 >= 0
+            && initialGrid[row][column - 1] === 0
+            && !hasBeenChecked[row][column - 1]) {
+            // add left cell
+            newCellsToReveal.push([row, column - 1]);
+            hasBeenChecked[row][column - 1] = true;
+          }
+
+          if (column + 1 < columns
+            && initialGrid[row][column + 1] === 0
+            && !hasBeenChecked[row][column + 1]) {
+            // add right cell
+            newCellsToReveal.push([row, column + 1]);
+            hasBeenChecked[row][column + 1] = true;
+          }
+        }
+
+        if (row + 1 < rows) {
+          if (initialGrid[row + 1][column] === 0
+          && !hasBeenChecked[row + 1][column]) {
+            // add bottom cell
+            newCellsToReveal.push([row + 1, column]);
+            hasBeenChecked[row + 1][column] = true;
+          }
+
+          if (column - 1 >= 0
+            && initialGrid[row + 1][column - 1] === 0
+            && !hasBeenChecked[row + 1][column - 1]) {
+            // add bottom left hand cell
+            newCellsToReveal.push([row + 1, column - 1]);
+            hasBeenChecked[row + 1][column - 1] = true;
+          }
+
+          if (column + 1 < columns
+            && initialGrid[row + 1][column + 1] === 0
+            && !hasBeenChecked[row + 1][column + 1]) {
+            // add bottom right hand cell
+            newCellsToReveal.push([row + 1, column + 1]);
+            hasBeenChecked[row + 1][column + 1] = true;
+          }
+        }
+      }
+
+      // update cellsToReveal
+      cellsToReveal = [...newCellsToReveal];
+      // keep searching unless there are no more cells to reveal
+    } while (cellsToReveal.length > 0);
+    // update playGrid
+    setPlayGrid(newPlayGrid);
+    checkResult();
+  };
+
+  /**
+   * Reveal cell content located at rowIndex, columnIndex
+   * @param {int} rowIndex
+   * @param {int} columnIndex
+   * @returns {void}
+   */
+  const revealCell = (rowIndex, columnIndex) => {
+    const newPlayGrid = [...playGrid];
+    const content = initialGrid[rowIndex][columnIndex];
+    newPlayGrid[rowIndex][columnIndex] = content;
+    setPlayGrid(newPlayGrid);
+    checkResult();
+  };
+
+  /**
    * Check content of cell at (rowIndex, columnIndex) in initGrid and change state of playGrid
    * @param {int} rowIndex
    * @param {int} columnIndex
    * @returns {int}
    */
   const tryCell = (rowIndex, columnIndex) => {
-    const newPlayGrid = [...playGrid];
     const content = initialGrid[rowIndex][columnIndex];
-    newPlayGrid[rowIndex][columnIndex] = content;
-    setPlayGrid(newPlayGrid);
-    checkResult();
+
+    if (content === 0) {
+      // reveal zone
+      revealZone(rowIndex, columnIndex);
+    } else {
+      // revealCell
+      revealCell(rowIndex, columnIndex);
+    }
   };
 
   /**
