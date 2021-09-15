@@ -229,13 +229,25 @@ function useGame({ rows, columns, mines }) {
     tryCell(rowIndex, columnIndex);
   };
 
-  useEffect(() => {
+  const generateGrid = (rows, columns, mines) => {
     const emptyGrid = Array(rows)
       .fill(null)
       .map(() => Array(columns).fill(null));
     const gridWithMines = addMinesToGrid(emptyGrid, mines);
     const gridWithNumbers = addNumbersToGrid(gridWithMines);
     setInitialGrid(gridWithNumbers);
+  };
+
+  const reset = () => {
+    generateGrid(rows, columns, mines);
+    setPlayGrid(Array(rows)
+      .fill(null)
+      .map(() => Array(columns).fill(null)));
+    setGameState('playing');
+  };
+
+  useEffect(() => {
+    generateGrid(rows, columns, mines);
   }, []);
 
   return {
@@ -243,6 +255,7 @@ function useGame({ rows, columns, mines }) {
     gameState,
     handleLeftClickOnCell,
     handleRightClickOnCell,
+    reset,
   };
 }
 

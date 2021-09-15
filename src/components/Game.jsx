@@ -30,6 +30,7 @@ function Game() {
           (event, rowIndex, columnIndex) => handleRightClickOnCell(event, rowIndex, columnIndex)
         }
       />
+      <Stats grid={playGrid} mines={40} />
       <Restart reset={reset} />
     </div>
   );
