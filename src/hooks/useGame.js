@@ -230,65 +230,105 @@ function useGame({ rows, columns, mines }) {
 
         // search for adjacent cells to reveal
         if (row - 1 >= 0) {
-          if (initialGrid[row - 1][column] === 0
+          if (initialGrid[row - 1][column] !== 'X'
             && !hasBeenChecked[row - 1][column]) {
-            // add top cell
-            newCellsToReveal.push([row - 1, column]);
+            if (initialGrid[row - 1][column] === 0) {
+              // add top cell
+              newCellsToReveal.push([row - 1, column]);
+            } else {
+              // limit number cell has been found
+              playGrid[row - 1][column] = initialGrid[row - 1][column];
+            }
             hasBeenChecked[row - 1][column] = true;
           }
-          if (column - 1 >= 0 && initialGrid[row - 1][column - 1] === 0
+          if (column - 1 >= 0 && initialGrid[row - 1][column - 1] !== 'X'
             && !hasBeenChecked[row - 1][column - 1]) {
-            // add top left hand corner cell
-            newCellsToReveal.push([row - 1, column - 1]);
+            if (initialGrid[row - 1][column - 1] === 0) {
+              // add top left hand corner cell
+              newCellsToReveal.push([row - 1, column - 1]);
+            } else {
+              // limit number cell has been found
+              playGrid[row - 1][column - 1] = initialGrid[row - 1][column - 1];
+            }
             hasBeenChecked[row - 1][column - 1] = true;
           }
 
           if (column + 1 < columns
-            && initialGrid[row - 1][column + 1] === 0
+            && initialGrid[row - 1][column + 1] !== 'X'
             && !hasBeenChecked[row - 1][column + 1]) {
-            // add top right hand corner cell
-            newCellsToReveal.push([row - 1, column + 1]);
+            if (initialGrid[row - 1][column + 1] === 0) {
+              // add top right hand corner cell
+              newCellsToReveal.push([row - 1, column + 1]);
+            } else {
+              // limit number cell has been found
+              playGrid[row - 1][column + 1] = initialGrid[row - 1][column + 1];
+            }
             hasBeenChecked[row - 1][column + 1] = true;
           }
         } else {
           if (column - 1 >= 0
-            && initialGrid[row][column - 1] === 0
+            && initialGrid[row][column - 1] !== 'X'
             && !hasBeenChecked[row][column - 1]) {
-            // add left cell
-            newCellsToReveal.push([row, column - 1]);
+            if (initialGrid[row][column - 1] === 0) {
+              // add left cell
+              newCellsToReveal.push([row, column - 1]);
+            } else {
+              // limit number cell has been found
+              playGrid[row][column - 1] = initialGrid[row][column - 1];
+            }
             hasBeenChecked[row][column - 1] = true;
           }
 
           if (column + 1 < columns
-            && initialGrid[row][column + 1] === 0
+            && initialGrid[row][column + 1] !== 'X'
             && !hasBeenChecked[row][column + 1]) {
-            // add right cell
-            newCellsToReveal.push([row, column + 1]);
+            if (initialGrid[row][column + 1] === 0) {
+              // add right cell
+              newCellsToReveal.push([row, column + 1]);
+            } else {
+              // limit number cell has been found
+              playGrid[row][column + 1] = initialGrid[row][column + 1];
+            }
             hasBeenChecked[row][column + 1] = true;
           }
         }
 
         if (row + 1 < rows) {
-          if (initialGrid[row + 1][column] === 0
+          if (initialGrid[row + 1][column] !== 'X'
           && !hasBeenChecked[row + 1][column]) {
-            // add bottom cell
-            newCellsToReveal.push([row + 1, column]);
+            if (initialGrid[row + 1][column] === 0) {
+              // add bottom cell
+              newCellsToReveal.push([row + 1, column]);
+            } else {
+              // limit number cell has been found
+              playGrid[row + 1][column] = initialGrid[row + 1][column];
+            }
             hasBeenChecked[row + 1][column] = true;
           }
 
           if (column - 1 >= 0
-            && initialGrid[row + 1][column - 1] === 0
+            && initialGrid[row + 1][column - 1] !== 'X'
             && !hasBeenChecked[row + 1][column - 1]) {
-            // add bottom left hand cell
-            newCellsToReveal.push([row + 1, column - 1]);
+            if (initialGrid[row + 1][column - 1] === 0) {
+              // add bottom left hand cell
+              newCellsToReveal.push([row + 1, column - 1]);
+            } else {
+              // limit number cell has been found
+              playGrid[row + 1][column - 1] = initialGrid[row + 1][column - 1];
+            }
             hasBeenChecked[row + 1][column - 1] = true;
           }
 
           if (column + 1 < columns
-            && initialGrid[row + 1][column + 1] === 0
+            && initialGrid[row + 1][column + 1] !== 'X'
             && !hasBeenChecked[row + 1][column + 1]) {
-            // add bottom right hand cell
-            newCellsToReveal.push([row + 1, column + 1]);
+            if (initialGrid[row + 1][column + 1] === 0) {
+              // add bottom right hand cell
+              newCellsToReveal.push([row + 1, column + 1]);
+            } else {
+              // limit number cell has been found
+              playGrid[row + 1][column + 1] = initialGrid[row + 1][column + 1];
+            }
             hasBeenChecked[row + 1][column + 1] = true;
           }
         }
