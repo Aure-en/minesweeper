@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Stats from '../../components/Stats';
@@ -26,7 +26,8 @@ describe('It renders properly', () => {
   });
 
   test('Renders the number of flags the user put', () => {
-    expect(screen.getByText(`Flags: ${flags}`).toBeInTheDocument());
+    expect(screen.getByText(`Flags:
+    ${flags}`).toBeInTheDocument());
   });
 
   test('Renders the number of leftover flags', () => {
