@@ -196,14 +196,12 @@ function useGame({ rows, columns, mines }) {
         } else if (content === 'X') {
           newState = 'defeat';
           setGameState(newState);
-          window.alert('defeat'); // temporary
           return;
         }
       }
     }
     if (remainingCellCount === mines) {
       newState = 'victory';
-      window.alert('victory'); // temporary
     }
     setGameState(newState);
   };
@@ -326,7 +324,6 @@ function useGame({ rows, columns, mines }) {
           }
         }
       }
-
       // update cellsToReveal
       cellsToReveal = [...newCellsToReveal];
       // keep searching unless there are no more cells to reveal
@@ -388,6 +385,13 @@ function useGame({ rows, columns, mines }) {
     const gridWithMines = addMinesToGrid(emptyGrid, mines);
     const gridWithNumbers = addNumbersToGrid(gridWithMines);
     setInitialGrid(gridWithNumbers);
+    /* const gridWithEmpty = [
+      [1, 1, 1, 1],
+      [1, 0, 0, 1],
+      [1, 0, 1, 1],
+      [1, 1, 1, 1],
+    ];
+    setInitialGrid(gridWithEmpty); */
   };
 
   const reset = () => {
@@ -408,6 +412,12 @@ function useGame({ rows, columns, mines }) {
     handleLeftClickOnCell,
     handleRightClickOnCell,
     reset,
+    tryCell,
+    toggleFlag,
+    checkResult,
+    initialGrid,
+    setInitialGrid,
+    setPlayGrid,
   };
 }
 

@@ -21,7 +21,8 @@ describe('Play - tryCell', () => {
     expect(result.current.playGrid[x][y]).toBe(null);
 
     // Play on [x][y]
-    act(() => result.current.tryCell(x, y));
+    /* act(() => result.current.tryCell(x, y)); */
+    act(() => result.current.handleLeftClickOnCell(x, y));
 
     // Checks that playGrid[x][y] content updated to match initialGrid[x][y].
     expect(result.current.playGrid[x][y]).toBe(result.current.initialGrid[x][y]);
@@ -53,14 +54,14 @@ describe('Play - tryCell', () => {
 
   test('When clicking on an empty cell, all the surrounded empty cells are revealed in playGrid', () => {
     // Initialize a grid.
-    const ROWS = 3;
-    const COLUMNS = 3;
-    const MINES = 3;
+    let rows = 3;
+    let columns = 3;
+    let mines = 3;
 
-    const { result } = renderHook(() => useGame({
-      rows: ROWS,
-      columns: COLUMNS,
-      mines: MINES,
+    let { result } = renderHook(() => useGame({
+      rows,
+      columns,
+      mines,
     }));
 
     /**
@@ -75,31 +76,56 @@ describe('Play - tryCell', () => {
       [1, 1, 1],
       [1, 'X', 1],
     ];
-    result.current.initialGrid = [...gridWithEmpty];
+    //result.current.initialGrid = [...gridWithEmpty];
+    act(() => result.current.setInitialGrid(gridWithEmpty));
 
     act(() => result.current.tryCell(0, 0));
+    /* console.log(result.current.initialGrid);
+    console.log(result.current.playGrid); */
 
-    expect(result.current.playGrid).toBe([
+    expect(result.current.playGrid).toStrictEqual([
       [0, 0, 0],
-      [0, 1, null],
-      [1, null, null],
+      [1, 1, 1],
+      [null, null, null],
     ]);
 
     // Test 2
+    rows = 4;
+    columns = 4;
+    mines = 0;
     gridWithEmpty = [
       [1, 1, 1, 1],
       [1, 0, 0, 1],
       [1, 0, 1, 1],
       [1, 1, 1, 1],
     ];
-    result.current.initialGrid = [...gridWithEmpty];
+    result = renderHook(() => useGame({
+      rows,
+      columns,
+      mines,
+    })).result;
 
-    act(() => result.current.tryCell(1, 1));
-
-    expect(result.current.playGrid).toBe([
+    gridWithEmpty = [
       [1, 1, 1, 1],
       [1, 0, 0, 1],
-      [1, 0, 1, null],
+      [1, 0, 1, 1],
+      [1, 1, 1, 1],
+    ];
+
+    act(() => {
+      result.current.setInitialGrid(gridWithEmpty);
+    });
+    act(() => {
+      result.current.setPlayGrid(Array(4).fill(null).map(() => Array(4).fill(null)));
+    });
+    act(() => {
+      result.current.tryCell(1, 1);
+    });
+
+    expect(result.current.playGrid).toStrictEqual([
+      [1, 1, 1, 1],
+      [1, 0, 0, 1],
+      [1, 0, 1, 1],
       [1, 1, 1, null],
     ]);
   });
@@ -108,9 +134,9 @@ describe('Play - tryCell', () => {
 describe('Flag - toggleFlag', () => {
   // Initialize a grid
   let result;
-  const ROWS = 3;
-  const COLUMNS = 3;
-  const MINES = 3;
+  const ROWS = 1;
+  const COLUMNS = 1;
+  const MINES = 1;
 
   beforeEach(() => {
     result = renderHook(() => useGame({
@@ -121,8 +147,8 @@ describe('Flag - toggleFlag', () => {
   });
 
   test('Can flag an empty cell', () => {
-    result.current.playGrid = [[null]];
-    act(() => result.current.toggleFlag(0, 0));
+    act(() => result.current.setPlayGrid([[null]]));
+    act((e) => result.current.toggleFlag(e, 0, 0));
     expect(result.current.playGrid[0][0]).toBe('F');
   });
 
@@ -132,7 +158,7 @@ describe('Flag - toggleFlag', () => {
     [0],
     [1],
   ])('Cannot flag a selected cell', (content) => {
-    result.current.playGrid = [[content]];
+    act(() => result.current.setPlayGrid([[content]]));
     act(() => result.current.toggleFlag(0, 0));
     expect(result.current.playGrid[0][0]).toBe(content);
   });
@@ -154,23 +180,23 @@ describe('Defeat', () => {
   });
 
   test('A mine causes defeat', () => {
-    result.current.playGrid = [
+    act(() => result.current.setPlayGrid([
       ['X', null, null],
       [null, 1, null],
       ['F', 1, null],
-    ];
-
-    expect(result.current.checkResult(result.current.playGrid)).toBe('defeat');
+    ]));
+    act(() => result.current.checkResult());
+    expect(result.current.gameState).toBe('defeat');
   });
 
   test('A mine causes defeat even if the board is full', () => {
-    result.current.playGrid = [
+    act(() => result.current.setPlayGrid([
       ['F', 1, 2],
       [1, 'X', 'F'],
       [1, 2, 2],
-    ];
-
-    expect(result.current.checkResult(result.current.playGrid)).toBe('defeat');
+    ]));
+    act(() => result.current.checkResult());
+    expect(result.current.gameState).toBe('defeat');
   });
 });
 
@@ -179,7 +205,7 @@ describe('Victory', () => {
   let result;
   const ROWS = 3;
   const COLUMNS = 3;
-  const MINES = 3;
+  const MINES = 2;
 
   beforeEach(() => {
     result = renderHook(() => useGame({
@@ -189,69 +215,73 @@ describe('Victory', () => {
     })).result;
   });
 
-  test('Victory if all cells that do not contain mines are revealed or flagged', () => {
-    result.current.playGrid = [
+  test('Victory if all cells that do not contain mines are revealed and all mines are flagged', () => {
+    act(() => result.current.setInitialGrid([
+      ['X', 1, 0],
+      [2, 2, 0],
+      ['X', 1, 0],
+    ]));
+    act(() => result.current.setPlayGrid([
       ['F', 1, 0],
       [2, 2, 0],
       ['F', 1, 0],
-    ];
-
-    expect(result.current.checkResult(result.current.playGrid)).toBe('victory');
+    ]));
+    act(() => result.current.checkResult());
+    expect(result.current.gameState).toBe('victory');
   });
 
   test('Victory if all number cells are revealed, even if not all mines cells are flagged', () => {
-    result.current.playGrid = [
+    act(() => result.current.setPlayGrid([
       [null, 1, 0],
       [2, 1, 0],
       ['F', 1, 0],
-    ];
+    ]));
+    act(() => result.current.checkResult());
+    expect(result.current.gameState).toBe('victory');
 
-    expect(result.current.checkResult(result.current.playGrid)).toBe('victory');
-
-    result.current.playGrid = [
+    act(() => result.current.setPlayGrid([
       [null, 1, 0],
       [2, 1, 0],
       [null, 1, 0],
-    ];
-
-    expect(result.current.checkResult(result.current.playGrid)).toBe('victory');
+    ]));
+    act(() => result.current.checkResult());
+    expect(result.current.gameState).toBe('victory');
   });
 });
 
 describe('Playing', () => {
   // Initialize a grid.
-  let result;
   const ROWS = 3;
   const COLUMNS = 3;
   const MINES = 3;
 
-  beforeEach(() => {
-    result = renderHook(() => useGame({
-      rows: ROWS,
-      columns: COLUMNS,
-      mines: MINES,
-    })).result;
+  const { result } = renderHook(() => useGame({
+    rows: ROWS,
+    columns: COLUMNS,
+    mines: MINES,
+  }));
 
-    result.current.initialGrid = [
-      ['X', 'X', 'X'],
-      [1, 2, 1],
-      [0, 0, 0],
-    ];
-  });
+  act(() => result.current.setInitialGrid([
+    ['X', 'X', 'X'],
+    [1, 2, 1],
+    [0, 0, 0],
+  ]));
 
-  test.each([
-    [
-      [null, 'X', 'X'],
+  test('Victory if all number cells are revealed, even if not all mines cells are flagged', () => {
+    act(() => result.current.setPlayGrid([
+      ['F', 'F', 'F'],
       [1, 2, 1],
-      [0, 0, 0],
-    ],
-    [
-      ['F', null, 'F'],
+      [null, 0, 0],
+    ]));
+    act(() => result.current.checkResult());
+    expect(result.current.gameState).toBe('playing');
+
+    act(() => result.current.setPlayGrid([
+      [null, null, null],
       [1, 2, null],
       [null, 0, null],
-    ],
-  ])('If all mines have not been discovered and no mine has been triggered, the game continues', (playGrid) => {
-    result.current.playGrid = playGrid;
-    expect(result.current.checkResult(result.current.playGrid)).toBe('playing');
+    ]));
+    act(() => result.current.checkResult());
+    expect(result.current.gameState).toBe('playing');
   });
 });

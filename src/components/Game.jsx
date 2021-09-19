@@ -16,7 +16,7 @@ function Game() {
   } = useGame({
     rows: 10,
     columns: 10,
-    mines: 30,
+    mines: 10,
   });
 
   return (
