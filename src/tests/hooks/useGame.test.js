@@ -72,7 +72,7 @@ describe('Play - tryCell', () => {
     // Test 1
     let gridWithEmpty = [
       [0, 0, 0],
-      [0, 1, 1],
+      [1, 1, 1],
       [1, 'X', 1],
     ];
     result.current.initialGrid = [...gridWithEmpty];

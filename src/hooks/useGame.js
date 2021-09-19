@@ -6,11 +6,13 @@ function useGame({ rows, columns, mines }) {
       .fill(null)
       .map(() => Array(columns).fill(null)),
   );
+
   const [initialGrid, setInitialGrid] = useState(
     Array(rows)
       .fill(null)
       .map(() => Array(columns).fill(null)),
   );
+
   const [gameState, setGameState] = useState('playing');
 
   const generateCoords = (rows, columns) => {
@@ -49,11 +51,15 @@ function useGame({ rows, columns, mines }) {
     const gridWithMines = [...grid];
 
     for (let i = 0; i < mines; i += 1) {
-      let cellCoords = generateCoords(grid.length, grid[0].length);
+      /* let cellCoords = generateCoords(grid.length, grid[0].length);
 
       while (!checkAvailable(gridWithMines, cellCoords)) {
         cellCoords = generateCoords(grid.length, grid[0].length);
-      }
+      } */
+      let cellCoords;
+      do {
+        cellCoords = generateCoords(grid.length, grid[0].length);
+      } while (!checkAvailable(gridWithMines, cellCoords));
 
       addMineToCell(gridWithMines, cellCoords);
     }
