@@ -51,11 +51,6 @@ function useGame({ rows, columns, mines }) {
     const gridWithMines = [...grid];
 
     for (let i = 0; i < mines; i += 1) {
-      /* let cellCoords = generateCoords(grid.length, grid[0].length);
-
-      while (!checkAvailable(gridWithMines, cellCoords)) {
-        cellCoords = generateCoords(grid.length, grid[0].length);
-      } */
       let cellCoords;
       do {
         cellCoords = generateCoords(grid.length, grid[0].length);
@@ -330,7 +325,6 @@ function useGame({ rows, columns, mines }) {
     } while (cellsToReveal.length > 0);
     // update playGrid
     setPlayGrid(newPlayGrid);
-    checkResult();
   };
 
   /**
@@ -344,7 +338,6 @@ function useGame({ rows, columns, mines }) {
     const content = initialGrid[rowIndex][columnIndex];
     newPlayGrid[rowIndex][columnIndex] = content;
     setPlayGrid(newPlayGrid);
-    checkResult();
   };
 
   /**
@@ -398,6 +391,10 @@ function useGame({ rows, columns, mines }) {
   useEffect(() => {
     generateGrid(rows, columns, mines);
   }, []);
+
+  useEffect(() => {
+    checkResult();
+  }, [playGrid]);
 
   return {
     playGrid,
