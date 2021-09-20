@@ -3,23 +3,18 @@ import PropTypes from 'prop-types';
 import useStats from '../hooks/useStats';
 
 function Stats({ grid, mines }) {
-  const { flags, toDiscover, minesLeft } = useStats({ grid, mines });
+  const { minesToDiscover, percSafeCellsToDiscover } = useStats({ grid, mines });
   return (
     <div>
       <div>
-        Flags:
+        Mines to discover:
         {' '}
-        {flags}
+        {minesToDiscover}
       </div>
       <div>
-        Unsweeped Mines:
+        Safe cells to be discovered:
         {' '}
-        {minesLeft}
-      </div>
-      <div>
-        To be discovered:
-        {' '}
-        {toDiscover}
+        {percSafeCellsToDiscover}
         %
       </div>
     </div>
