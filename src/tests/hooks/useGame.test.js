@@ -190,7 +190,7 @@ describe('Defeat', () => {
       [null, 1, null],
       ['F', 1, null],
     ]));
-    act(() => result.current.checkResult());
+    // act(() => result.current.checkResult());
     expect(result.current.gameState).toBe('defeat');
   });
 
@@ -200,7 +200,7 @@ describe('Defeat', () => {
       [1, 'X', 'F'],
       [1, 2, 2],
     ]));
-    act(() => result.current.checkResult());
+    // act(() => result.current.checkResult());
     expect(result.current.gameState).toBe('defeat');
   });
 });
