@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import useGame from '../hooks/useGame';
 import Title from './Title';
 import Message from './Message';
@@ -15,14 +16,14 @@ function Game() {
     handleRightClickOnCell,
   } = useGame({
     rows: 16,
-    columns: 14,
-    mines: 40,
+    columns: 16,
+    mines: 20,
   });
 
   return (
-    <div>
+    <Container>
       <Title />
-      <Message gameState={gameState} reset={reset} />
+      <Stats grid={playGrid} mines={20} />
       <Grid
         grid={playGrid}
         onClick={(rowIndex, columnIndex) => handleLeftClickOnCell(rowIndex, columnIndex)}
@@ -30,10 +31,15 @@ function Game() {
           (event, rowIndex, columnIndex) => handleRightClickOnCell(event, rowIndex, columnIndex)
         }
       />
-      <Stats grid={playGrid} mines={40} />
+      <Message gameState={gameState} reset={reset} />
       <Restart reset={reset} />
-    </div>
+    </Container>
   );
 }
 
 export default Game;
+
+const Container = styled.main`
+  display: flex;
+  flex-direction: column;
+`;

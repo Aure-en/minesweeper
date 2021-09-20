@@ -1,11 +1,14 @@
 import React from 'react';
+import GlobalStyles from './styles/global/globalStyles';
+import { ThemeProvider } from './context/ThemeContext';
 import Game from './components/Game';
 
 function App() {
   return (
-    <div className="App">
+    <ThemeProvider>
+      <GlobalStyles />
       <Game />
-    </div>
+    </ThemeProvider>
   );
 }
 
