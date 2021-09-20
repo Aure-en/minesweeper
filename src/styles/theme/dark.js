@@ -30,6 +30,7 @@ const colors = {
   map_fill: 'rgb(230, 108, 0)',
   map_stroke: 'rgb(200, 200, 200)',
   mine_fill: 'rgb(150, 150, 150)',
+  mine_fill_triggered: 'rgb(230, 108, 0)',
   mine_stroke: 'rgb(26, 26, 29)',
   flag_fill: 'rgb(239, 146, 64)',
   flag_stroke: 'rgb(239, 146, 64)',
