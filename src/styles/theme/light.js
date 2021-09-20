@@ -15,8 +15,8 @@ const colors = {
   cell_bg_selected_secondary: 'rgb(255, 246, 231)',
   cell_bg_hover: 'rgb(236, 236, 236)',
   cell_bg_hover_selected: 'rgb(255, 251, 244)',
-  cell_border: 'rgba(249 175 84)',
-  cell_border_selected: 'rgba(255, 225, 178, 0.5)',
+  cell_border: 'rgba(255, 190, 111)',
+  cell_border_selected: 'rgba(255, 212, 144, 0.5)',
 
   number_1: 'rgb(132, 146, 172)',
   number_2: 'rgb(255, 127, 24)',
@@ -28,11 +28,11 @@ const colors = {
   number_8: 'rgb(0, 0, 0)',
 
   map_fill: 'rgb(255, 222, 180)',
-  map_stroke: 'rgb(0, 0, 0)',
+  map_stroke: 'rgb(50, 50, 50)',
   mine_fill: 'rgb(150, 150, 150)',
-  mine_stroke: 'rgb(0, 0, 0)',
+  mine_stroke: 'rgb(70, 70, 70)',
   flag_fill: 'rgb(255, 203, 138)',
-  flag_stroke: 'rgb(0, 0, 0)',
+  flag_stroke: 'rgb(70, 70, 70)',
 };
 
 export default colors;
