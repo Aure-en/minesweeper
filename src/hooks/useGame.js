@@ -15,7 +15,7 @@ function useGame({ rows, columns, mines }) {
 
   const [gameState, setGameState] = useState('playing');
 
-  const generateCoords = (rows, columns) => {
+  const generateCoords = () => {
     const x = Math.floor(Math.random() * rows);
     const y = Math.floor(Math.random() * columns);
     return { x, y };
@@ -47,7 +47,7 @@ function useGame({ rows, columns, mines }) {
    * @param {int} mines Number of mines
    * @returns {array} Grid filled with mines.
    */
-  const addMinesToGrid = (grid, mines) => {
+  const addMinesToGrid = (grid) => {
     const gridWithMines = [...grid];
 
     for (let i = 0; i < mines; i += 1) {
@@ -378,20 +378,13 @@ function useGame({ rows, columns, mines }) {
     tryCell(rowIndex, columnIndex);
   };
 
-  const generateGrid = (rows, columns, mines) => {
+  const generateGrid = () => {
     const emptyGrid = Array(rows)
       .fill(null)
       .map(() => Array(columns).fill(null));
     const gridWithMines = addMinesToGrid(emptyGrid, mines);
     const gridWithNumbers = addNumbersToGrid(gridWithMines);
     setInitialGrid(gridWithNumbers);
-    /* const gridWithEmpty = [
-      [1, 1, 1, 1],
-      [1, 0, 0, 1],
-      [1, 0, 1, 1],
-      [1, 1, 1, 1],
-    ];
-    setInitialGrid(gridWithEmpty); */
   };
 
   const reset = () => {
