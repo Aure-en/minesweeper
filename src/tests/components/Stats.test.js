@@ -26,14 +26,14 @@ describe('It renders properly', () => {
   });
 
   test('Renders the number of flags the user put', () => {
-    expect(screen.getByText(`Flags: ${flags}`)).toBeInTheDocument();
+    expect(screen.getByText(`${flags}`)).toBeInTheDocument();
   });
 
   test('Renders the number of leftover flags', () => {
-    expect(screen.getByText(`Unsweeped Mines: ${mines - flags}`)).toBeInTheDocument();
+    expect(screen.getByText(`${mines - flags}`)).toBeInTheDocument();
   });
 
   test('Renders the % of discovered board', () => {
-    expect(screen.getByText(`To be discovered: ${toDiscover}%`)).toBeInTheDocument();
+    expect(screen.getByText(`${toDiscover}%`)).toBeInTheDocument();
   });
 });

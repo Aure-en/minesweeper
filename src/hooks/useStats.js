@@ -1,27 +1,26 @@
 import { useState, useEffect } from 'react';
 
 function useStats({ grid, mines }) {
-  const [flags, setFlags] = useState(''); // Number of flags the player put.
-  const [toDiscover, setToDiscover] = useState(''); // % left of the grid to discover.
-  const [minesLeft, setMinesLeft] = useState(''); // Number of mines left, assuming the flags are correct.
+  const [minesToDiscover, setMinesToDiscover] = useState(''); // Number of mines to discover.
+  const [percSafeCellsToDiscover, setPerSafeCellsToDiscover] = useState(''); // % of safe cells left.
 
   // Calculate
   useEffect(() => {
-    const flags = grid.flat().filter((cell) => cell === 'F').length;
-    setFlags(flags);
+    const newMinesToDiscover = mines - grid.flat().filter((cell) => cell === 'F').length;
+    setMinesToDiscover(newMinesToDiscover);
 
-    const toDiscover = Math.round((grid.flat().filter((cell) => cell === null).length * 100)
-      / grid.flat().length);
-    setToDiscover(toDiscover);
-
-    const minesLeft = mines - flags;
-    setMinesLeft(minesLeft);
+    const safeCells = grid[0].length * grid.length - mines;
+    const safeCellsDiscovered = grid.flat().filter(
+      (cell) => !Number.isNaN(parseInt(cell, 10)),
+    ).length;
+    const safeCellsToDiscover = safeCells - safeCellsDiscovered;
+    const newPerSafeCellsToDiscover = (safeCellsToDiscover * 100) / safeCells;
+    setPerSafeCellsToDiscover(newPerSafeCellsToDiscover.toFixed(1));
   }, [grid, mines]);
 
   return {
-    flags,
-    toDiscover,
-    minesLeft,
+    minesToDiscover,
+    percSafeCellsToDiscover,
   };
 }
 

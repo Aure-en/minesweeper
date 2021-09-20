@@ -1,28 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import useStats from '../hooks/useStats';
 
+import IconFlag from '../assets/Flag';
+import IconMap from '../assets/Map';
+
 function Stats({ grid, mines }) {
-  const { flags, toDiscover, minesLeft } = useStats({ grid, mines });
+  const { minesToDiscover, percSafeCellsToDiscover } = useStats({ grid, mines });
   return (
-    <div>
-      <div>
-        Flags:
+    <Container>
+      <Information>
+        <IconFlag />
         {' '}
-        {flags}
-      </div>
-      <div>
-        Unsweeped Mines:
+        {minesToDiscover}
+      </Information>
+      <Information>
+        <IconMap />
         {' '}
-        {minesLeft}
-      </div>
-      <div>
-        To be discovered:
-        {' '}
-        {toDiscover}
+        {percSafeCellsToDiscover}
         %
-      </div>
-    </div>
+      </Information>
+    </Container>
   );
 }
 
@@ -39,3 +38,17 @@ Stats.propTypes = {
   ).isRequired,
   mines: PropTypes.number.isRequired,
 };
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const Information = styled.div`
+  display: flex;
+  align-items: center;
+
+  & > svg {
+    margin-right: 0.5rem;
+  }
+`;
