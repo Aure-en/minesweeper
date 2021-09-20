@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { ThemeProvider } from '../../context/ThemeContext';
 import Stats from '../../components/Stats';
 
 describe('It renders properly', () => {
@@ -17,16 +18,19 @@ describe('It renders properly', () => {
 
     mines = 3;
     flags = grid.flat().filter((cell) => cell === 'F').length;
-    toDiscover = Math.round(
-      (grid.flat().filter((cell) => cell === null).length * 100)
-        / grid.flat().length,
+    const safeCells = grid[0].length * grid.length - mines;
+    const safeCellsDiscovered = grid.flat().filter(
+      (cell) => !Number.isNaN(parseInt(cell, 10)),
+    ).length;
+    const safeCellsToDiscover = safeCells - safeCellsDiscovered;
+    const newPerSafeCellsToDiscover = (safeCellsToDiscover * 100) / safeCells;
+    toDiscover = newPerSafeCellsToDiscover.toFixed(1);
+
+    render(
+      <ThemeProvider>
+        <Stats grid={grid} mines={mines} />
+      </ThemeProvider>,
     );
-
-    render(<Stats grid={grid} mines={mines} />);
-  });
-
-  test('Renders the number of flags the user put', () => {
-    expect(screen.getByText(`${flags}`)).toBeInTheDocument();
   });
 
   test('Renders the number of leftover flags', () => {
