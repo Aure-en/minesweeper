@@ -14,9 +14,9 @@ function Game() {
     handleLeftClickOnCell,
     handleRightClickOnCell,
   } = useGame({
-    rows: 16,
-    columns: 14,
-    mines: 40,
+    rows: 10,
+    columns: 10,
+    mines: 10,
   });
 
   return (

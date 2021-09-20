@@ -12,8 +12,6 @@ function Grid({ grid, onClick, onContextMenu }) {
           x={rowIndex}
           y={cellIndex}
           content={cell}
-          played={cell !== null}
-          flagged={cell === 'F'}
           onClick={() => onClick(rowIndex, cellIndex)}
           onContextMenu={(event) => onContextMenu(event, rowIndex, cellIndex)}
         />
@@ -23,12 +21,16 @@ function Grid({ grid, onClick, onContextMenu }) {
 }
 
 Grid.defaultProps = {
+  x: null,
+  y: null,
   grid: [[]],
   onClick: () => {},
   onContextMenu: () => {},
 };
 
 Grid.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
   grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['X', 'F', null])]))),
   onClick: PropTypes.func,
   onContextMenu: PropTypes.func,
