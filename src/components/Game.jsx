@@ -7,17 +7,16 @@ import Stats from './Stats';
 import Restart from './Restart';
 
 function Game() {
+  const mines = 2;
+  const rows = 3;
+  const columns = 3;
   const {
     playGrid,
     gameState,
     reset,
     handleLeftClickOnCell,
     handleRightClickOnCell,
-  } = useGame({
-    rows: 10,
-    columns: 10,
-    mines: 10,
-  });
+  } = useGame({ rows, columns, mines });
 
   return (
     <div>
@@ -30,7 +29,7 @@ function Game() {
           (event, rowIndex, columnIndex) => handleRightClickOnCell(event, rowIndex, columnIndex)
         }
       />
-      <Stats grid={playGrid} mines={40} />
+      <Stats grid={playGrid} mines={mines} />
       <Restart reset={reset} />
     </div>
   );
