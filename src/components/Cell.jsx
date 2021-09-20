@@ -49,7 +49,10 @@ const CellStyled = styled.div`
   justify-content: center;
   width: 30px;
   height: 30px;
-  border: 1px solid ${(props) => props.theme.cell_border};
+  border: ${(props) => (props.content !== null && props.content !== 'F'
+    ? `2px inset ${props.theme.cell_border_selected}`
+    : `2px outset ${props.theme.cell_border}`)
+};
   margin: -1px 0 0 -1px;
   font-size: 1.25rem;
   cursor: pointer;

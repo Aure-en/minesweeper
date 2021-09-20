@@ -11,11 +11,12 @@ const colors = {
 
   cell_bg_primary: 'rgb(194, 228, 185)',
   cell_bg_secondary: 'rgb(164, 210, 162)',
-  cell_bg_selected_primary: 'rgb(255, 225, 178)',
-  cell_bg_selected_secondary: 'rgb(253, 241, 216)',
+  cell_bg_selected_primary: 'rgb(255, 246, 231)',
+  cell_bg_selected_secondary: 'rgb(253, 238, 216)',
   cell_bg_hover: 'rgb(255, 250, 240)',
   cell_bg_hover_selected: 'rgb(233, 249, 231)',
-  cell_border: 'rgba(79, 136, 76, 0.5)',
+  cell_border: 'rgba(124, 202, 121, 0.5)',
+  cell_border_selected: 'rgba(255, 225, 178, 0.5)',
 
   number_1: 'rgb(36, 20, 255)',
   number_2: 'rgb(38, 113, 8)',

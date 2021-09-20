@@ -17,13 +17,13 @@ function Game() {
   } = useGame({
     rows: 16,
     columns: 16,
-    mines: 20,
+    mines: 30,
   });
 
   return (
     <Container>
       <Title />
-      <Stats grid={playGrid} mines={20} />
+      <Stats grid={playGrid} mines={30} />
       <Grid
         grid={playGrid}
         onClick={(rowIndex, columnIndex) => handleLeftClickOnCell(rowIndex, columnIndex)}

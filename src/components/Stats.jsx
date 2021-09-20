@@ -3,26 +3,30 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import useStats from '../hooks/useStats';
 
+import { ReactComponent as IconFlag } from '../assets/flag.svg';
+import { ReactComponent as IconMap } from '../assets/map.svg';
+import { ReactComponent as IconMine } from '../assets/mine.svg';
+
 function Stats({ grid, mines }) {
   const { flags, toDiscover, minesLeft } = useStats({ grid, mines });
   return (
     <Container>
-      <div>
-        Flags:
+      <Information>
+        <IconFlag />
         {' '}
         {flags}
-      </div>
-      <div>
-        Unsweeped Mines:
+      </Information>
+      <Information>
+        <IconMine />
         {' '}
         {minesLeft}
-      </div>
-      <div>
-        To be discovered:
+      </Information>
+      <Information>
+        <IconMap />
         {' '}
         {toDiscover}
         %
-      </div>
+      </Information>
     </Container>
   );
 }
@@ -44,4 +48,13 @@ Stats.propTypes = {
 const Container = styled.div`
   display: flex;
   justify-content: space-around;
+`;
+
+const Information = styled.div`
+  display: flex;
+  align-items: center;
+
+  & > svg {
+    margin-right: 0.5rem;
+  }
 `;
