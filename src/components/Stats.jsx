@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import useStats from '../hooks/useStats';
 
-import { ReactComponent as IconFlag } from '../assets/flag.svg';
-import { ReactComponent as IconMap } from '../assets/map.svg';
-import { ReactComponent as IconMine } from '../assets/mine.svg';
+import IconFlag from '../assets/Flag';
+import IconMap from '../assets/Map';
+import IconMine from '../assets/Mine';
 
 function Stats({ grid, mines }) {
   const { flags, toDiscover, minesLeft } = useStats({ grid, mines });

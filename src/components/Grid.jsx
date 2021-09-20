@@ -40,7 +40,7 @@ const GridStyled = styled.div`
   display: grid;
   width: ${(props) => `${props.columnCount * 30}px`};
   grid-template-columns: repeat(${(props) => props.$columnCount}, 1fr);
-  margin: 1rem 0;
+  margin: 1rem 0 2rem 0;
   grid-gap: 3px;
 `;
 

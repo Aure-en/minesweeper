@@ -19,13 +19,6 @@ const Header = styled.header`
   font-size: 2rem;
   font-weight: 300;
   margin-bottom: 1rem;
-
-  & > div {
-    position: relative;
-    left: -5rem;
-    font-size: 1.75rem;
-    line-height: 0.25;
-  }
 `;
 
 const Heading = styled.h1`

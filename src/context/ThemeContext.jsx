@@ -12,7 +12,7 @@ export function useTheme() {
 
 export function ThemeProvider({ children }) {
   const current = localStorage.getItem('theme');
-  const [theme, setTheme] = useState(current || 'light');
+  const [theme, setTheme] = useState(current || 'dark');
 
   const changeTheme = () => {
     if (theme === 'light') {

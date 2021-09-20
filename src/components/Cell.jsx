@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-// Assets
-import flag from '../assets/flag.svg';
-import mine from '../assets/mine.svg';
+import IconFlag from '../assets/Flag';
+import IconMine from '../assets/Mine';
 
 function Cell({
   content, x, y, onClick, onContextMenu,
@@ -19,7 +18,9 @@ function Cell({
       onClick={onClick}
       onContextMenu={onContextMenu}
     >
-      {content}
+      {content === 'F' && <IconFlag />}
+      {content === 'X' && <IconMine />}
+      {content !== 'F' && content !== 'X' && content}
     </CellStyled>
   );
 }
@@ -50,8 +51,8 @@ const CellStyled = styled.div`
   width: 30px;
   height: 30px;
   border: ${(props) => (props.$content !== null && props.$content !== 'F'
-    ? `2px inset ${props.theme.cell_border_selected}`
-    : `2px outset ${props.theme.cell_border}`)
+    ? `1px inset ${props.theme.cell_border_selected}`
+    : `1px outset ${props.theme.cell_border}`)
 };
   margin: -1px 0 0 -1px;
   font-size: 1.25rem;
@@ -101,23 +102,11 @@ const CellStyled = styled.div`
     return props.theme.cell_bg_secondary;
   }};
 
-  // Background image if there is a mine or a flag
-  background-image: ${(props) => {
-    if (props.$content === 'X') {
-      return `url(${mine})`;
-    } if (props.$content === 'F') {
-      return `url(${flag})`;
-    }
-  }};
-
-  background-position: center;
-  background-repeat: no-repeat;
-
   &:hover {
     // Background color is brighter on hover.
     background-color: ${(props) => ((props.$content !== null && props.$content !== 'F')
-    ? props.theme.cell_bg_hover
-    : props.theme.cell_bg_hover_selected)};
+    ? props.theme.cell_bg_hover_selected
+    : props.theme.cell_bg_hover)};
   }
 `;
 
