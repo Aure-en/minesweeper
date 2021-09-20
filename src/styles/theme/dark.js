@@ -11,8 +11,8 @@ const colors = {
 
   cell_bg_primary: 'rgb(26, 26, 29)',
   cell_bg_secondary: 'rgb(26, 26, 29)',
-  cell_bg_selected_primary: 'rgb(234, 202, 187)',
-  cell_bg_selected_secondary: 'rgb(234, 202, 187)',
+  cell_bg_selected_primary: 'rgb(222, 205, 195)',
+  cell_bg_selected_secondary: 'rgb(222, 205, 195)',
   cell_bg_hover: 'rgb(37, 36, 43)',
   cell_bg_hover_selected: 'rgb(255, 235, 225)',
   cell_border: 'rgba(228, 163, 92, 0.5)',
