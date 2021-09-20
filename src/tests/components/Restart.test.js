@@ -4,7 +4,7 @@ import Restart from '../../components/Restart';
 import '@testing-library/jest-dom';
 
 test('It renders properly', () => {
-  render(<Restart restart={() => {}} />);
+  render(<Restart reset={() => {}} />);
 
   expect(screen.getByRole('button', { name: 'Restart' })).toBeInTheDocument();
 });
