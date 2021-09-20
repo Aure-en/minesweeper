@@ -1,11 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '../../context/ThemeContext';
 import Game from '../../components/Game';
 
 test('Game can be restarted', () => {
   render(
-    <Game />,
+    <ThemeProvider>
+      <Game />
+    </ThemeProvider>,
   );
 
   // Make 1 play.

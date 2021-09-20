@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { ThemeProvider } from '../../context/ThemeContext';
 import Grid from '../../components/Grid';
 
 describe('Grid renders properly', () => {
@@ -9,7 +10,9 @@ describe('Grid renders properly', () => {
       .map(() => Array(3).fill(null));
 
     render(
-      <Grid grid={grid} />,
+      <ThemeProvider>
+        <Grid grid={grid} />
+      </ThemeProvider>,
     );
 
     grid.forEach((row, rowIndex) => row.forEach((cell, colIndex) => {
@@ -27,15 +30,25 @@ describe('Grid renders properly', () => {
     ];
 
     render(
-      <Grid grid={grid} />,
+      <ThemeProvider>
+        <Grid grid={grid} />
+      </ThemeProvider>,
     );
 
     grid.forEach((row, rowIndex) => row.forEach((cell, colIndex) => {
       const cellElem = document.querySelector(`[data-x='${rowIndex}'][data-y='${colIndex}']`);
-      if (cell !== null) {
-        expect(cellElem.textContent).toBe(String(cell));
-      } else {
-        expect(cellElem.textContent).toBeFalsy();
+      switch (cell) {
+        case 'X':
+          expect(cellElem.textContent).toBe('mine');
+          break;
+        case 'F':
+          expect(cellElem.textContent).toBe('flag');
+          break;
+        case null:
+          expect(cellElem.textContent).toBeFalsy();
+          break;
+        default:
+          expect(cellElem.textContent).toBe(String(cell));
       }
     }));
   });

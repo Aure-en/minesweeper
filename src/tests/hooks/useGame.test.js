@@ -49,7 +49,14 @@ describe('Play - tryCell', () => {
 
     // Replay and checks that nothing has changed.
     act(() => result.current.tryCell(x, y));
-    expect(result.current.playGrid[x][y]).toBe(content);
+
+    if (result.current.playGrid[x][y] !== 'X') {
+      // If the cell is not a bomb, it stays the same.
+      expect(result.current.playGrid[x][y]).toBe(content);
+    } else {
+      // If the user clicked on a bomb, it becomes a 'B'.
+      expect(result.current.playGrid[x][y]).toBe('B');
+    }
   });
 
   test('When clicking on an empty cell, all the surrounded empty cells are revealed in playGrid', () => {
@@ -76,12 +83,9 @@ describe('Play - tryCell', () => {
       [1, 1, 1],
       [1, 'X', 1],
     ];
-    //result.current.initialGrid = [...gridWithEmpty];
     act(() => result.current.setInitialGrid(gridWithEmpty));
 
     act(() => result.current.tryCell(0, 0));
-    /* console.log(result.current.initialGrid);
-    console.log(result.current.playGrid); */
 
     expect(result.current.playGrid).toStrictEqual([
       [0, 0, 0],

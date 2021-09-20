@@ -6,6 +6,7 @@ function Map() {
 
   return (
     <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-map-2" width="28" height="28" viewBox="0 0 24 24" strokeWidth="1.5" stroke={themeContext.map_stroke} fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <title>map</title>
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M18 13l-3.5 -5a4 4 0 1 1 7 0l-3.5 5" fill={themeContext.map_fill} />
       <line x1="18" y1="6" x2="18" y2="6.01" />
