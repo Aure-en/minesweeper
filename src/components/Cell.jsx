@@ -20,7 +20,8 @@ function Cell({
     >
       {content === 'F' && <IconFlag />}
       {content === 'X' && <IconMine />}
-      {content !== 'F' && content !== 'X' && content}
+      {content === 'B' && <IconMine causeDefeat />}
+      {content !== 'F' && content !== 'X' && content !== 'B' && content}
     </CellStyled>
   );
 }
