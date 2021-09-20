@@ -201,6 +201,20 @@ function useGame({ rows, columns, mines }) {
     setGameState(newState);
   };
 
+  const revealGrid = () => {
+    const newPlayGrid = [...playGrid];
+    playGrid.forEach(((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
+        if (cell === 'X') {
+          newPlayGrid[rowIndex][columnIndex] = 'B';
+        } else {
+          newPlayGrid[rowIndex][columnIndex] = initialGrid[rowIndex][columnIndex];
+        }
+      });
+    }));
+    setPlayGrid(newPlayGrid);
+  };
+
   /**
    * Reveal safe zone around safe cell located at rowIndex, columnIndex
    * @param {int} rowIndex
@@ -395,6 +409,12 @@ function useGame({ rows, columns, mines }) {
   useEffect(() => {
     checkResult();
   }, [playGrid]);
+
+  useEffect(() => {
+    if (gameState !== 'playing') {
+      revealGrid();
+    }
+  }, [gameState]);
 
   return {
     playGrid,
