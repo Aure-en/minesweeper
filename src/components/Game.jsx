@@ -8,22 +8,21 @@ import Stats from './Stats';
 import Restart from './Restart';
 
 function Game() {
+  const mines = 30;
+  const rows = 16;
+  const columns = 16;
   const {
     playGrid,
     gameState,
     reset,
     handleLeftClickOnCell,
     handleRightClickOnCell,
-  } = useGame({
-    rows: 16,
-    columns: 16,
-    mines: 30,
-  });
+  } = useGame({ rows, columns, mines });
 
   return (
     <Container>
       <Title />
-      <Stats grid={playGrid} mines={30} />
+      <Stats grid={playGrid} mines={mines} />
       <Grid
         grid={playGrid}
         onClick={(rowIndex, columnIndex) => handleLeftClickOnCell(rowIndex, columnIndex)}

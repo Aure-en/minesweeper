@@ -5,26 +5,20 @@ import useStats from '../hooks/useStats';
 
 import IconFlag from '../assets/Flag';
 import IconMap from '../assets/Map';
-import IconMine from '../assets/Mine';
 
 function Stats({ grid, mines }) {
-  const { flags, toDiscover, minesLeft } = useStats({ grid, mines });
+  const { minesToDiscover, percSafeCellsToDiscover } = useStats({ grid, mines });
   return (
     <Container>
       <Information>
         <IconFlag />
         {' '}
-        {flags}
-      </Information>
-      <Information>
-        <IconMine />
-        {' '}
-        {minesLeft}
+        {minesToDiscover}
       </Information>
       <Information>
         <IconMap />
         {' '}
-        {toDiscover}
+        {percSafeCellsToDiscover}
         %
       </Information>
     </Container>
