@@ -1,23 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import useStats from '../hooks/useStats';
+
+import IconFlag from '../assets/Flag';
+import IconMap from '../assets/Map';
 
 function Stats({ grid, mines }) {
   const { minesToDiscover, percSafeCellsToDiscover } = useStats({ grid, mines });
   return (
-    <div>
-      <div>
-        Mines to discover:
+    <Container>
+      <Information>
+        <IconFlag />
         {' '}
         {minesToDiscover}
-      </div>
-      <div>
-        Safe cells to be discovered:
+      </Information>
+      <Information>
+        <IconMap />
         {' '}
         {percSafeCellsToDiscover}
         %
-      </div>
-    </div>
+      </Information>
+    </Container>
   );
 }
 
@@ -34,3 +38,17 @@ Stats.propTypes = {
   ).isRequired,
   mines: PropTypes.number.isRequired,
 };
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const Information = styled.div`
+  display: flex;
+  align-items: center;
+
+  & > svg {
+    margin-right: 0.5rem;
+  }
+`;

@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import useGame from '../hooks/useGame';
 import Title from './Title';
 import Message from './Message';
@@ -7,9 +8,9 @@ import Stats from './Stats';
 import Restart from './Restart';
 
 function Game() {
-  const mines = 2;
-  const rows = 3;
-  const columns = 3;
+  const mines = 30;
+  const rows = 16;
+  const columns = 16;
   const {
     playGrid,
     gameState,
@@ -19,9 +20,9 @@ function Game() {
   } = useGame({ rows, columns, mines });
 
   return (
-    <div>
+    <Container>
       <Title />
-      <Message gameState={gameState} reset={reset} />
+      <Stats grid={playGrid} mines={mines} />
       <Grid
         grid={playGrid}
         onClick={(rowIndex, columnIndex) => handleLeftClickOnCell(rowIndex, columnIndex)}
@@ -29,10 +30,15 @@ function Game() {
           (event, rowIndex, columnIndex) => handleRightClickOnCell(event, rowIndex, columnIndex)
         }
       />
-      <Stats grid={playGrid} mines={mines} />
+      <Message gameState={gameState} reset={reset} />
       <Restart reset={reset} />
-    </div>
+    </Container>
   );
 }
 
 export default Game;
+
+const Container = styled.main`
+  display: flex;
+  flex-direction: column;
+`;
