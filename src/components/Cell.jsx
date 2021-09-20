@@ -11,7 +11,7 @@ function Cell({
 }) {
   return (
     <CellStyled
-      content={content}
+      $content={content}
       data-x={x}
       data-y={y}
       $x={x}
@@ -49,7 +49,7 @@ const CellStyled = styled.div`
   justify-content: center;
   width: 30px;
   height: 30px;
-  border: ${(props) => (props.content !== null && props.content !== 'F'
+  border: ${(props) => (props.$content !== null && props.$content !== 'F'
     ? `2px inset ${props.theme.cell_border_selected}`
     : `2px outset ${props.theme.cell_border}`)
 };
@@ -58,7 +58,7 @@ const CellStyled = styled.div`
   cursor: pointer;
 
   color: ${(props) => {
-    switch (props.content) {
+    switch (props.$content) {
       case 1:
         return props.theme.number_1;
       case 2:
@@ -86,7 +86,7 @@ const CellStyled = styled.div`
    */
   background-color: ${(props) => {
   // If the cell was selected
-    if (props.content !== null && props.content !== 'F') {
+    if (props.$content !== null && props.$content !== 'F') {
       if ((props.$x % 2 === 0 && props.$y % 2 !== 0)
     || (props.$x % 2 !== 0 && props.$y % 2 === 0)) {
         return props.theme.cell_bg_selected_primary;
@@ -103,9 +103,9 @@ const CellStyled = styled.div`
 
   // Background image if there is a mine or a flag
   background-image: ${(props) => {
-    if (props.content === 'X') {
+    if (props.$content === 'X') {
       return `url(${mine})`;
-    } if (props.content === 'F') {
+    } if (props.$content === 'F') {
       return `url(${flag})`;
     }
   }};
@@ -115,7 +115,7 @@ const CellStyled = styled.div`
 
   &:hover {
     // Background color is brighter on hover.
-    background-color: ${(props) => ((props.content !== null && props.content !== 'F')
+    background-color: ${(props) => ((props.$content !== null && props.$content !== 'F')
     ? props.theme.cell_bg_hover
     : props.theme.cell_bg_hover_selected)};
   }
