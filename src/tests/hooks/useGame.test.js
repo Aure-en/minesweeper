@@ -25,7 +25,7 @@ describe('Play - tryCell', () => {
     act(() => result.current.handleLeftClickOnCell(x, y));
 
     // Checks that playGrid[x][y] content updated to match initialGrid[x][y].
-    expect(result.current.playGrid[x][y]).toBe(result.current.initialGrid[x][y]);
+    expect(result.current.playGrid[x][y]).toBe(result.current.initialGrid[x][y] === 'X' ? 'B' : result.current.initialGrid[x][y]);
   });
 
   test('Should not update playGrid after a play on a cell that has been selected before', () => {
@@ -44,26 +44,28 @@ describe('Play - tryCell', () => {
     const y = Math.floor(Math.random() * COLUMNS);
 
     // Play once
-    act(() => result.current.tryCell(x, y));
+    act(() => result.current.handleLeftClickOnCell(x, y));
     const content = result.current.playGrid[x][y];
 
     // Replay and checks that nothing has changed.
-    act(() => result.current.tryCell(x, y));
+    act(() => result.current.handleLeftClickOnCell(x, y));
 
-    if (result.current.playGrid[x][y] !== 'X') {
+    expect(result.current.playGrid[x][y]).toBe(content);
+
+    /* if (result.current.playGrid[x][y] !== 'X') {
       // If the cell is not a bomb, it stays the same.
       expect(result.current.playGrid[x][y]).toBe(content);
     } else {
       // If the user clicked on a bomb, it becomes a 'B'.
       expect(result.current.playGrid[x][y]).toBe('B');
-    }
+    } */
   });
 
   test('When clicking on an empty cell, all the surrounded empty cells are revealed in playGrid', () => {
     // Initialize a grid.
     let rows = 3;
     let columns = 3;
-    let mines = 3;
+    let mines = 1;
 
     let { result } = renderHook(() => useGame({
       rows,
@@ -84,7 +86,6 @@ describe('Play - tryCell', () => {
       [1, 'X', 1],
     ];
     act(() => result.current.setInitialGrid(gridWithEmpty));
-
     act(() => result.current.tryCell(0, 0));
 
     expect(result.current.playGrid).toStrictEqual([
@@ -189,7 +190,7 @@ describe('Defeat', () => {
       [null, 1, null],
       ['F', 1, null],
     ]));
-    act(() => result.current.checkResult());
+    // act(() => result.current.checkResult());
     expect(result.current.gameState).toBe('defeat');
   });
 
@@ -199,7 +200,7 @@ describe('Defeat', () => {
       [1, 'X', 'F'],
       [1, 2, 2],
     ]));
-    act(() => result.current.checkResult());
+    // act(() => result.current.checkResult());
     expect(result.current.gameState).toBe('defeat');
   });
 });
@@ -230,7 +231,6 @@ describe('Victory', () => {
       [2, 2, 0],
       ['F', 1, 0],
     ]));
-    act(() => result.current.checkResult());
     expect(result.current.gameState).toBe('victory');
   });
 
@@ -240,7 +240,6 @@ describe('Victory', () => {
       [2, 1, 0],
       ['F', 1, 0],
     ]));
-    act(() => result.current.checkResult());
     expect(result.current.gameState).toBe('victory');
 
     act(() => result.current.setPlayGrid([
@@ -248,7 +247,6 @@ describe('Victory', () => {
       [2, 1, 0],
       [null, 1, 0],
     ]));
-    act(() => result.current.checkResult());
     expect(result.current.gameState).toBe('victory');
   });
 });
@@ -271,11 +269,11 @@ describe('Playing', () => {
     [0, 0, 0],
   ]));
 
-  test('Victory if all number cells are revealed, even if not all mines cells are flagged', () => {
+  test('Continue playing if all safe zone are not discovered', () => {
     act(() => result.current.setPlayGrid([
       ['F', 'F', 'F'],
       [1, 2, 1],
-      [null, 0, 0],
+      ['F', 0, 0],
     ]));
     act(() => result.current.checkResult());
     expect(result.current.gameState).toBe('playing');

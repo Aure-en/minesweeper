@@ -410,7 +410,9 @@ function useGame({ rows, columns, mines }) {
   }, [rows, columns, mines]);
 
   useEffect(() => {
-    checkResult();
+    if (gameState === 'playing') {
+      checkResult();
+    }
   }, [playGrid]);
 
   useEffect(() => {
