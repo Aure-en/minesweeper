@@ -11,7 +11,7 @@ function Stats({ grid, mines }) {
   return (
     <Container>
       <Information>
-        <IconFlag />
+        <IconFlag outer />
         {' '}
         {minesToDiscover}
       </Information>

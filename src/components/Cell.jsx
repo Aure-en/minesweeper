@@ -51,13 +51,11 @@ const CellStyled = styled.div`
   justify-content: center;
   width: 30px;
   height: 30px;
-  border: ${(props) => (props.$content !== null && props.$content !== 'F'
-    ? `1px inset ${props.theme.cell_border_selected}`
-    : `1px outset ${props.theme.cell_border}`)
-};
+  box-shadow: ${(props) => (props.$content === null || props.$content === 'F' ? `2px 2px 1px 0px inset ${props.theme.cell_shadow}` : '')};
   margin: -1px 0 0 -1px;
   font-size: 1.25rem;
   cursor: pointer;
+  transition: background 0.05s linear;
 
   color: ${(props) => {
     switch (props.$content) {
@@ -108,6 +106,8 @@ const CellStyled = styled.div`
     background-color: ${(props) => ((props.$content !== null && props.$content !== 'F')
     ? props.theme.cell_bg_hover_selected
     : props.theme.cell_bg_hover)};
+
+    box-shadow: none;
   }
 `;
 
