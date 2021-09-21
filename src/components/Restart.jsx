@@ -15,16 +15,17 @@ Restart.propTypes = {
 };
 
 const Button = styled.button`
-  background: ${(props) => props.theme.button_bg};
-  color: ${(props) => props.theme.button_text};
+  border: 1px solid ${(props) => props.theme.button};
+  color: ${(props) => props.theme.button};
+  background: transparent;
   align-self: center;
-  border: none;
   padding: 0.4rem 1rem;
   border-radius: 3px;
   cursor: pointer;
   transition: background 0.1s ease-out;
 
   &:hover {
-    background: ${(props) => props.theme.button_bg_hover};
+    border: 1px solid ${(props) => props.theme.button_hover};
+    color: ${(props) => props.theme.button_hover};
   }
 `;
