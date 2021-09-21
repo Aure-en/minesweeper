@@ -1,5 +1,5 @@
 const colors = {
-  bg_primary: 'rgb(26, 26, 29)',
+  bg_primary: 'rgb(41, 41, 43)',
 
   text_primary: 'rgb(200, 200, 200)',
   text_secondary: 'rgb(230, 108, 0)',
@@ -10,8 +10,8 @@ const colors = {
 
   cell_bg_primary: 'rgb(255, 162, 79)',
   cell_bg_secondary: 'rgb(255, 162, 79)',
-  cell_bg_selected_primary: 'rgb(26, 26, 29)',
-  cell_bg_selected_secondary: 'rgb(26, 26, 29)',
+  cell_bg_selected_primary: 'rgb(41, 41, 43)',
+  cell_bg_selected_secondary: 'rgb(41, 41, 43)',
   cell_bg_hover: 'rgb(255, 195, 141)',
   cell_bg_hover_selected: 'rgb(51, 51, 51)',
   cell_border: 'rgba(228, 163, 92, 0.5)',
@@ -31,9 +31,9 @@ const colors = {
   map_stroke: 'rgb(200, 200, 200)',
   mine_fill: 'rgb(150, 150, 150)',
   mine_fill_triggered: 'rgb(230, 108, 0)',
-  mine_stroke: 'rgb(26, 26, 29)',
-  flag_fill: 'rgb(26, 26, 29)',
-  flag_stroke: 'rgb(26, 26, 29)',
+  mine_stroke: 'rgb(41, 41, 43)',
+  flag_fill: 'rgb(41, 41, 43)',
+  flag_stroke: 'rgb(41, 41, 43)',
   flag_stroke_outer: 'rgb(255, 162, 79)',
   flag_fill_outer: 'rgb(255, 162, 79)',
 };
