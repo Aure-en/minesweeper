@@ -6,7 +6,10 @@ import Theme from './Theme';
 import Select from './Select';
 import Custom from './Custom';
 import useSettings from '../../hooks/useSettings';
+
+// Assets
 import { ReactComponent as IconSettings } from '../../assets/settings/menu.svg';
+import { ReactComponent as IconClose } from '../../assets/settings/close.svg';
 
 const Settings = ({ settings, setSettings }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,6 +58,7 @@ const Settings = ({ settings, setSettings }) => {
         }}
       >
         <Container>
+          <CloseButton type="button" onClick={() => setIsModalOpen(false)}><IconClose /></CloseButton>
           <Heading>Settings</Heading>
 
           <Form onSubmit={handleSubmit}>
@@ -126,8 +130,8 @@ const Form = styled.form`
 
   & > button {
     align-self: center;
-    border: 1px solid ${(props) => props.theme.button};
-    color: ${(props) => props.theme.button};
+    border: 1px solid ${(props) => props.theme.text_primary};
+    color: ${(props) => props.theme.text_primary};
     background: transparent;
     align-self: center;
     padding: 0.3rem 1rem;
@@ -158,6 +162,20 @@ const Button = styled.button`
 
   &:focus {
     outline: 2px solid transparent;
+  }
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: ${(props) => props.theme.text_primary};
+
+  &:hover {
+    color: ${(props) => props.theme.text_secondary};
   }
 `;
 
