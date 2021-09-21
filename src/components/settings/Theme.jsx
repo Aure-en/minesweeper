@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useTheme } from '../context/ThemeContext';
-import { ReactComponent as IconDark } from '../assets/theme/dark.svg';
-import { ReactComponent as IconLight } from '../assets/theme/light.svg';
+import { useTheme } from '../../context/ThemeContext';
+import { ReactComponent as IconDark } from '../../assets/theme/dark.svg';
+import { ReactComponent as IconLight } from '../../assets/theme/light.svg';
 
 function Theme() {
   const { theme, changeTheme } = useTheme();
@@ -18,12 +18,6 @@ function Theme() {
 export default Theme;
 
 const Button = styled.button`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  bottom: 1rem;
-  right: 1rem;
   background: transparent;
   border: none;
   cursor: pointer;

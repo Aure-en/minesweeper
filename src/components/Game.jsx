@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import useGame from '../hooks/useGame';
 import Title from './Title';
@@ -7,10 +8,7 @@ import Grid from './Grid';
 import Stats from './Stats';
 import Restart from './Restart';
 
-function Game() {
-  const mines = 30;
-  const rows = 16;
-  const columns = 16;
+function Game({ rows, columns, mines }) {
   const {
     playGrid,
     gameState,
@@ -35,6 +33,12 @@ function Game() {
     </Container>
   );
 }
+
+Game.propTypes = {
+  rows: PropTypes.number.isRequired,
+  columns: PropTypes.number.isRequired,
+  mines: PropTypes.number.isRequired,
+};
 
 export default Game;
 

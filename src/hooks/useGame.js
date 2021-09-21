@@ -392,6 +392,9 @@ function useGame({ rows, columns, mines }) {
     const gridWithMines = addMinesToGrid(emptyGrid, mines);
     const gridWithNumbers = addNumbersToGrid(gridWithMines);
     setInitialGrid(gridWithNumbers);
+    setPlayGrid(Array(rows)
+      .fill(null)
+      .map(() => Array(columns).fill(null)));
   };
 
   const reset = () => {
@@ -404,7 +407,7 @@ function useGame({ rows, columns, mines }) {
 
   useEffect(() => {
     generateGrid(rows, columns, mines);
-  }, []);
+  }, [rows, columns, mines]);
 
   useEffect(() => {
     checkResult();

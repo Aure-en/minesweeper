@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import IconFlag from '../assets/Flag';
-import IconMine from '../assets/Mine';
+import IconFlag from '../assets/game/Flag';
+import IconMine from '../assets/game/Mine';
 
 function Cell({
   content, x, y, onClick, onContextMenu,

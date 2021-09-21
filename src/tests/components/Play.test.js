@@ -8,7 +8,7 @@ describe('Grid updates after a play', () => {
   beforeEach(() => {
     render(
       <ThemeProvider>
-        <Game />
+        <Game rows={3} columns={3} mines={5} />
       </ThemeProvider>,
     );
   });

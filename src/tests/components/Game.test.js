@@ -7,7 +7,7 @@ import Game from '../../components/Game';
 test('Game can be restarted', () => {
   render(
     <ThemeProvider>
-      <Game />
+      <Game rows={3} columns={3} mines={5} />
     </ThemeProvider>,
   );
 
