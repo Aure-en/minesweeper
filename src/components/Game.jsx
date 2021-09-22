@@ -1,21 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import useGame from '../hooks/useGame';
 import Title from './Title';
 import Message from './Message';
 import Grid from './Grid';
 import Stats from './Stats';
 import Restart from './Restart';
+import useGrid from '../hooks/useGrid';
+import useGame from '../hooks/useGame';
 
 function Game({ rows, columns, mines }) {
+  const { initialGrid, generateGrid } = useGrid({ rows, columns, mines });
   const {
     playGrid,
     gameState,
     reset,
     handleLeftClickOnCell,
     handleRightClickOnCell,
-  } = useGame({ rows, columns, mines });
+  } = useGame({
+    initialGrid,
+    generateGrid,
+    rows,
+    columns,
+    mines,
+  });
 
   return (
     <Container>
