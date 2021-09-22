@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import useGame from '../../hooks/useGame';
+import useGrid from '../../hooks/useGrid';
 
 describe('Play - tryCell', () => {
   test('Should update playGrid after a play on a cell that has never been selected before', () => {
@@ -8,7 +9,14 @@ describe('Play - tryCell', () => {
     const COLUMNS = 3;
     const MINES = 3;
 
+    const { result: gridResult } = renderHook(() => useGrid({
+      rows: ROWS,
+      columns: COLUMNS,
+      mines: MINES,
+    }));
+
     const { result } = renderHook(() => useGame({
+      initialGrid: gridResult.current.initialGrid,
       rows: ROWS,
       columns: COLUMNS,
       mines: MINES,
@@ -19,13 +27,10 @@ describe('Play - tryCell', () => {
 
     // playGrid elements the user has not clicked on are null
     expect(result.current.playGrid[x][y]).toBe(null);
-
     // Play on [x][y]
-    /* act(() => result.current.tryCell(x, y)); */
     act(() => result.current.handleLeftClickOnCell(x, y));
-
     // Checks that playGrid[x][y] content updated to match initialGrid[x][y].
-    expect(result.current.playGrid[x][y]).toBe(result.current.initialGrid[x][y] === 'X' ? 'B' : result.current.initialGrid[x][y]);
+    expect(result.current.playGrid[x][y]).toBe(gridResult.current.initialGrid[x][y] === 'X' ? 'B' : gridResult.current.initialGrid[x][y]);
   });
 
   test('Should not update playGrid after a play on a cell that has been selected before', () => {
@@ -34,7 +39,14 @@ describe('Play - tryCell', () => {
     const COLUMNS = 3;
     const MINES = 3;
 
+    const { result: gridResult } = renderHook(() => useGrid({
+      rows: ROWS,
+      columns: COLUMNS,
+      mines: MINES,
+    }));
+
     const { result } = renderHook(() => useGame({
+      initialGrid: gridResult.current.initialGrid,
       rows: ROWS,
       columns: COLUMNS,
       mines: MINES,
@@ -51,14 +63,6 @@ describe('Play - tryCell', () => {
     act(() => result.current.handleLeftClickOnCell(x, y));
 
     expect(result.current.playGrid[x][y]).toBe(content);
-
-    /* if (result.current.playGrid[x][y] !== 'X') {
-      // If the cell is not a bomb, it stays the same.
-      expect(result.current.playGrid[x][y]).toBe(content);
-    } else {
-      // If the user clicked on a bomb, it becomes a 'B'.
-      expect(result.current.playGrid[x][y]).toBe('B');
-    } */
   });
 
   test('When clicking on an empty cell, all the surrounded empty cells are revealed in playGrid', () => {
@@ -67,7 +71,21 @@ describe('Play - tryCell', () => {
     let columns = 3;
     let mines = 1;
 
+    let { result: gridResult } = renderHook(() => useGrid({
+      rows,
+      columns,
+      mines,
+    }));
+
+    let gridWithEmpty = [
+      [0, 0, 0],
+      [1, 1, 1],
+      [1, 'X', 1],
+    ];
+
     let { result } = renderHook(() => useGame({
+      initialGrid: gridWithEmpty,
+      generateGrid: gridResult.current.generateGrid,
       rows,
       columns,
       mines,
@@ -80,14 +98,8 @@ describe('Play - tryCell', () => {
      */
 
     // Test 1
-    let gridWithEmpty = [
-      [0, 0, 0],
-      [1, 1, 1],
-      [1, 'X', 1],
-    ];
-    act(() => result.current.setInitialGrid(gridWithEmpty));
+    act(() => gridResult.current.setInitialGrid(gridWithEmpty));
     act(() => result.current.tryCell(0, 0));
-
     expect(result.current.playGrid).toStrictEqual([
       [0, 0, 0],
       [1, 1, 1],
@@ -98,13 +110,8 @@ describe('Play - tryCell', () => {
     rows = 4;
     columns = 4;
     mines = 0;
-    gridWithEmpty = [
-      [1, 1, 1, 1],
-      [1, 0, 0, 1],
-      [1, 0, 1, 1],
-      [1, 1, 1, 1],
-    ];
-    result = renderHook(() => useGame({
+
+    gridResult = renderHook(() => useGrid({
       rows,
       columns,
       mines,
@@ -117,16 +124,20 @@ describe('Play - tryCell', () => {
       [1, 1, 1, 1],
     ];
 
+    result = renderHook(() => useGame({
+      initialGrid: gridWithEmpty,
+      generateGrid: gridResult.current.generateGrid,
+      rows,
+      columns,
+      mines,
+    })).result;
+
     act(() => {
-      result.current.setInitialGrid(gridWithEmpty);
-    });
-    act(() => {
-      result.current.setPlayGrid(Array(4).fill(null).map(() => Array(4).fill(null)));
+      gridResult.current.setInitialGrid(gridWithEmpty);
     });
     act(() => {
       result.current.tryCell(1, 1);
     });
-
     expect(result.current.playGrid).toStrictEqual([
       [1, 1, 1, 1],
       [1, 0, 0, 1],
@@ -143,8 +154,16 @@ describe('Flag - toggleFlag', () => {
   const COLUMNS = 1;
   const MINES = 1;
 
+  const { result: gridResult } = renderHook(() => useGrid({
+    rows: ROWS,
+    columns: COLUMNS,
+    mines: MINES,
+  }));
+
   beforeEach(() => {
     result = renderHook(() => useGame({
+      initialGrid: gridResult.current.initialGrid,
+      generateGrid: gridResult.current.generateGrid,
       rows: ROWS,
       columns: COLUMNS,
       mines: MINES,
@@ -176,8 +195,16 @@ describe('Defeat', () => {
   const COLUMNS = 3;
   const MINES = 3;
 
+  const { result: gridResult } = renderHook(() => useGrid({
+    rows: ROWS,
+    columns: COLUMNS,
+    mines: MINES,
+  }));
+
   beforeEach(() => {
     result = renderHook(() => useGame({
+      initialGrid: gridResult.current.initialGrid,
+      gridGenerate: gridResult.current.generateGrid,
       rows: ROWS,
       columns: COLUMNS,
       mines: MINES,
@@ -212,8 +239,16 @@ describe('Victory', () => {
   const COLUMNS = 3;
   const MINES = 2;
 
+  const { result: gridResult } = renderHook(() => useGrid({
+    rows: ROWS,
+    columns: COLUMNS,
+    mines: MINES,
+  }));
+
   beforeEach(() => {
     result = renderHook(() => useGame({
+      initialGrid: gridResult.current.initialGrid,
+      gridGenerate: gridResult.current.generateGrid,
       rows: ROWS,
       columns: COLUMNS,
       mines: MINES,
@@ -221,7 +256,7 @@ describe('Victory', () => {
   });
 
   test('Victory if all cells that do not contain mines are revealed and all mines are flagged', () => {
-    act(() => result.current.setInitialGrid([
+    act(() => gridResult.current.setInitialGrid([
       ['X', 1, 0],
       [2, 2, 0],
       ['X', 1, 0],
@@ -257,13 +292,21 @@ describe('Playing', () => {
   const COLUMNS = 3;
   const MINES = 3;
 
-  const { result } = renderHook(() => useGame({
+  const { result: gridResult } = renderHook(() => useGrid({
     rows: ROWS,
     columns: COLUMNS,
     mines: MINES,
   }));
 
-  act(() => result.current.setInitialGrid([
+  const { result } = renderHook(() => useGame({
+    initialGrid: gridResult.current.initialGrid,
+    gridGenerate: gridResult.current.generateGrid,
+    rows: ROWS,
+    columns: COLUMNS,
+    mines: MINES,
+  }));
+
+  act(() => gridResult.current.setInitialGrid([
     ['X', 'X', 'X'],
     [1, 2, 1],
     [0, 0, 0],
