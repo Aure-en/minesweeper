@@ -37,7 +37,7 @@ Cell.defaultProps = {
 Cell.propTypes = {
   content: PropTypes.oneOfType([
     PropTypes.number,
-    PropTypes.oneOf(['X', 'F', null]),
+    PropTypes.oneOf(['X', 'F', 'B', null]),
   ]),
   x: PropTypes.number,
   y: PropTypes.number,

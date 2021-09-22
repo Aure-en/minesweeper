@@ -32,7 +32,7 @@ Stats.propTypes = {
     PropTypes.arrayOf(
       PropTypes.oneOfType([
         PropTypes.number,
-        PropTypes.oneOf(['X', 'F', null]),
+        PropTypes.oneOf(['X', 'F', 'B', null]),
       ]),
     ),
   ).isRequired,
