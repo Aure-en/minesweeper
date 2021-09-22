@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
 
+/*
+check consequences of player actions (tryCell and toggleFlag
+or handleLeftClickOnCell and handleRightClickOnCell
+according to situation)
+test revealGrid in different setup to assure that it works properly
+test victory, defeat, and playing conditions
+*/
 function useGame({
   initialGrid,
   generateGrid,
