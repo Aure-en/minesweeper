@@ -33,11 +33,10 @@ function useSettings({
 
   // Settings that will be applied on form submit.
   const [settingsToApply, setSettingsToApply] = useState(settings);
-
   const [error, setError] = useState('');
 
   const handleSettingChange = (e) => {
-    setSettingsToApply((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+    setSettingsToApply((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSelect = (e) => {
@@ -45,8 +44,8 @@ function useSettings({
       // Open the custom form if it is not open
       setIsCustomFormOpen(true);
       setSettingsToApply({
-        name: 'custom',
         ...settings,
+        name: 'custom',
       });
     } else {
       // Close the custom form if it is open
@@ -65,7 +64,7 @@ function useSettings({
     // If the user selects one of the default difficulties, apply it.
     if (['beginner', 'intermediate', 'expert'].includes(settingsToApply.name)) {
       setSettings(settingsToApply);
-      setIsModalOpen(false);
+      return setIsModalOpen(false);
     }
 
     // If the user select the 'custom' difficulty,
@@ -84,12 +83,15 @@ function useSettings({
       return setError('There must be at least one free cell.');
     }
 
-    setSettings({
+    const customSettings = {
       name: 'custom',
       rows,
       columns,
       mines,
-    });
+    };
+
+    setSettingsToApply(customSettings);
+    setSettings(customSettings);
     setIsModalOpen(false);
   };
 

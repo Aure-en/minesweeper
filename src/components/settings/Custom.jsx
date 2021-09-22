@@ -44,9 +44,18 @@ const Custom = ({ settingsToApply, handleSettingChange, error }) => (
 
 Custom.propTypes = {
   settingsToApply: PropTypes.shape({
-    rows: PropTypes.number.isRequired,
-    columns: PropTypes.number.isRequired,
-    mines: PropTypes.number.isRequired,
+    rows: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]).isRequired,
+    columns: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]).isRequired,
+    mines: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]).isRequired,
   }).isRequired,
   handleSettingChange: PropTypes.func.isRequired,
   error: PropTypes.string,

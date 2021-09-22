@@ -8,7 +8,7 @@ function Theme() {
   const { theme, changeTheme } = useTheme();
 
   return (
-    <Button type="button" onClick={changeTheme}>
+    <Button type="button" onClick={changeTheme} aria-label="theme">
       { theme === 'dark'
         ? <IconDark /> : <IconLight />}
     </Button>

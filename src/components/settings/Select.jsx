@@ -5,16 +5,16 @@ import styled from 'styled-components';
 const Select = ({ current, options, handleSelect }) => (
   <Label htmlFor="difficulty">
     Difficulty
-    <StyledSelect id="difficulty" onChange={handleSelect}>
+    <StyledSelect id="difficulty" onChange={handleSelect} value={current}>
       {options.map((setting) => (
-        <option selected={current === setting.name}>{setting.name}</option>
+        <option key={setting.name}>{setting.name}</option>
       ))}
     </StyledSelect>
   </Label>
 );
 
 Select.propTypes = {
-  current: PropTypes.oneOf(['beginner', 'intermediate', 'difficult', 'custom'])
+  current: PropTypes.oneOf(['beginner', 'intermediate', 'expert', 'custom'])
     .isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
