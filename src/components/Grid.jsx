@@ -38,6 +38,7 @@ const GridStyled = styled.div`
   grid-template-columns: repeat(${(props) => props.$columnCount}, 1fr);
   margin: 2rem 0;
   grid-gap: 3px;
+  align-self: center;
 `;
 
 export default Grid;
