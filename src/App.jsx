@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
 import GlobalStyles from './styles/global/globalStyles';
 import { ThemeProvider } from './context/ThemeContext';
 import Game from './components/Game';
@@ -25,7 +24,5 @@ function App() {
     </ThemeProvider>
   );
 }
-
-Modal.setAppElement('#root');
 
 export default App;

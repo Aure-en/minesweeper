@@ -65,7 +65,7 @@ function useSettings({
     // If the user selects one of the default difficulties, apply it.
     if (['beginner', 'intermediate', 'expert'].includes(settingsToApply.name)) {
       setSettings(settingsToApply);
-      setIsModalOpen(false);
+      return setIsModalOpen(false);
     }
 
     // If the user select the 'custom' difficulty,

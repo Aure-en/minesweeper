@@ -7,7 +7,7 @@ const Select = ({ current, options, handleSelect }) => (
     Difficulty
     <StyledSelect id="difficulty" onChange={handleSelect}>
       {options.map((setting) => (
-        <option selected={current === setting.name}>{setting.name}</option>
+        <option selected={current === setting.name} key={setting.name}>{setting.name}</option>
       ))}
     </StyledSelect>
   </Label>

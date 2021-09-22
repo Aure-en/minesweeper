@@ -32,7 +32,7 @@ const Settings = ({ settings, setSettings }) => {
   return (
     <>
       <Buttons>
-        <Button type="button" onClick={() => setIsModalOpen(true)}>
+        <Button type="button" onClick={() => setIsModalOpen(true)} aria-label="settings">
           <IconSettings />
         </Button>
         <Theme />
