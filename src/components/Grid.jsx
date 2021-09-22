@@ -6,7 +6,7 @@ import Cell from './Cell';
 function Grid({ grid, onClick, onContextMenu }) {
   return (
     <GridStyled $columnCount={grid[0].length}>
-      { grid.map((row, rowIndex) => row.map((cell, cellIndex) => (
+      {grid.map((row, rowIndex) => row.map((cell, cellIndex) => (
         <Cell
           key={`${rowIndex} ${cellIndex}`}
           x={rowIndex}
@@ -21,13 +21,19 @@ function Grid({ grid, onClick, onContextMenu }) {
 }
 
 Grid.defaultProps = {
-  grid: [[]],
   onClick: () => {},
   onContextMenu: () => {},
 };
 
 Grid.propTypes = {
-  grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['X', 'F', null])]))),
+  grid: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.oneOf(['X', 'F', 'B', null]),
+      ]),
+    ),
+  ).isRequired,
   onClick: PropTypes.func,
   onContextMenu: PropTypes.func,
 };
