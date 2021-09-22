@@ -200,6 +200,6 @@ describe('Custom difficulty', () => {
     const lastCell = document.querySelector(`[data-x='${SETTINGS.rows - 1}'][data-y='${SETTINGS.columns - 1}']`);
     const extraCell = document.querySelector(`[data-x='${SETTINGS.rows}'][data-y='${SETTINGS.columns}']`);
     expect(lastCell).toBeDefined();
-    expect(extraCell).not.toBeDefined();
+    expect(extraCell).toBe(null);
   });
 });
