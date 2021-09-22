@@ -94,7 +94,7 @@ const Settings = ({ settings, setSettings }) => {
 
 Settings.propTypes = {
   settings: PropTypes.shape({
-    name: PropTypes.oneOf(['beginner', 'intermediate', 'difficult', 'custom'])
+    name: PropTypes.oneOf(['beginner', 'intermediate', 'expert', 'custom'])
       .isRequired,
     rows: PropTypes.number.isRequired,
     columns: PropTypes.number.isRequired,

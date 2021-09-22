@@ -103,7 +103,7 @@ describe('Default difficulties', () => {
     const lastCell = document.querySelector(`[data-x='${difficulty.rows - 1}'][data-y='${difficulty.columns - 1}']`);
     const extraCell = document.querySelector(`[data-x='${difficulty.rows}'][data-y='${difficulty.rows}']`);
     expect(lastCell).toBeDefined();
-    expect(extraCell).not.toBeDefined();
+    expect(extraCell).toBe(null);
   });
 });
 
@@ -142,11 +142,11 @@ describe('Custom difficulty', () => {
     expect(screen.getByText('Mines, rows and columns must be integers.')).toBeInTheDocument();
   });
 
-  test.only('User must leave at least 1 free cell', () => {
+  test('User must leave at least 1 free cell', () => {
     const IMPOSSIBLE_SETTINGS = {
-      rows: 10,
-      columns: 10,
-      mines: 100,
+      rows: '10',
+      columns: '10',
+      mines: '100',
     };
 
     // Fill inputs with bad values
@@ -171,9 +171,9 @@ describe('Custom difficulty', () => {
 
   test('Custom difficulty can be applied', () => {
     const SETTINGS = {
-      rows: 3,
-      columns: 3,
-      mines: 3,
+      rows: '3',
+      columns: '3',
+      mines: '3',
     };
 
     // Fill inputs
