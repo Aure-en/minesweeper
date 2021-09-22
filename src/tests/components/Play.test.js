@@ -1,12 +1,15 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '../../context/ThemeContext';
 import Game from '../../components/Game';
 
 describe('Grid updates after a play', () => {
   beforeEach(() => {
     render(
-      <Game />,
+      <ThemeProvider>
+        <Game rows={3} columns={3} mines={5} />
+      </ThemeProvider>,
     );
   });
 

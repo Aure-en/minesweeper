@@ -1,18 +1,16 @@
 import { useState, useEffect } from 'react';
 
 function useGrid({ rows, columns, mines }) {
-  const [playGrid, setPlayGrid] = useState(
-    Array(rows)
-      .fill(null)
-      .map(() => Array(columns).fill(null)),
-  );
   const [initialGrid, setInitialGrid] = useState(
     Array(rows)
       .fill(null)
       .map(() => Array(columns).fill(null)),
   );
 
-  const generateCoords = (rows, columns) => {
+  /*
+  grid must be constructed once at the start then each time settings are modified
+  */
+  const generateCoords = () => {
     const x = Math.floor(Math.random() * rows);
     const y = Math.floor(Math.random() * columns);
     return { x, y };
@@ -44,15 +42,14 @@ function useGrid({ rows, columns, mines }) {
    * @param {int} mines Number of mines
    * @returns {array} Grid filled with mines.
    */
-  const addMinesToGrid = (grid, mines) => {
+  const addMinesToGrid = (grid) => {
     const gridWithMines = [...grid];
 
     for (let i = 0; i < mines; i += 1) {
-      let cellCoords = generateCoords(grid.length, grid[0].length);
-
-      while (!checkAvailable(gridWithMines, cellCoords)) {
+      let cellCoords;
+      do {
         cellCoords = generateCoords(grid.length, grid[0].length);
-      }
+      } while (!checkAvailable(gridWithMines, cellCoords));
 
       addMineToCell(gridWithMines, cellCoords);
     }
@@ -145,17 +142,24 @@ function useGrid({ rows, columns, mines }) {
     return gridWithNumbers;
   };
 
-  useEffect(() => {
+  const generateGrid = () => {
     const emptyGrid = Array(rows)
       .fill(null)
       .map(() => Array(columns).fill(null));
     const gridWithMines = addMinesToGrid(emptyGrid, mines);
     const gridWithNumbers = addNumbersToGrid(gridWithMines);
     setInitialGrid(gridWithNumbers);
-  }, []);
+  };
+
+  // Rebuild initialGrid when settings are modified
+  useEffect(() => {
+    generateGrid(rows, columns, mines);
+  }, [rows, columns, mines]);
 
   return {
-    playGrid,
+    initialGrid,
+    setInitialGrid,
+    generateGrid,
   };
 }
 
