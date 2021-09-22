@@ -2,6 +2,7 @@
   "name": "minesweeper",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://aure-en.github.io/minesweeper",
   "dependencies": {
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
@@ -15,7 +16,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "DISABLE_ESLINT_PLUGIN=true npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -46,7 +49,8 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.25.1",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^3.2.3"
   },
   "jest": {
     "moduleNameMapper": {
