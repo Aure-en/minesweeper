@@ -192,6 +192,7 @@ describe('Custom difficulty', () => {
     // Apply changes
     const submitButton = screen.getByRole('button', { name: /apply/i });
     userEvent.click(submitButton);
+    console.error(screen.getByText(SETTINGS.mines));
 
     // Number of mines
     expect(screen.getByText(SETTINGS.mines)).toBeInTheDocument();
