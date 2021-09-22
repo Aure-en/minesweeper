@@ -269,10 +269,8 @@ function useGame({
   };
 
   useEffect(() => {
-    setPlayGrid(Array(rows)
-      .fill(null)
-      .map(() => Array(columns).fill(null)));
-  }, [initialGrid]);
+    reset();
+  }, [rows, columns]);
 
   useEffect(() => {
     if (gameState === 'playing') {
