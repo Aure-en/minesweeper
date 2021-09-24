@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# Minesweeper
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple version of the famous game minesweeper. Hope you enjoy it! ;)
 
-## Available Scripts
+## Rules
 
-In the project directory, you can run:
+- Every turn, the player can either try a cell, pose a flag on a cell or remove it.
+- A cell that contains a flag can't be tested as long there's a flag.
+- When a player try a cell, the content of the cell is revealed.
+- If a player try a cell with no mines surrounding it, all neighboring cells that have no mines surrounding them are revealed.
+- Player looses when trying a cell that contains a mine.
+- Player wins if all cells without mines are discovered.
+- Flag counter represents the maximum number of flags that a player can lay. It corresponds to the number of mines that the grid contains. If the number of flags is superior to the number of mines the counter value gets negative and represents the number of flags to remove.
+- % displayed represent the percentage of cells without mines left.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Left click to try a cell
+- Right click to toggle flag presence on a cell
+- Game settings can be modified by clicking on the burger menu located at the bottom right hand corner of the screen.
+- Player can switch between dark/light theme by clicking on the icon located at the right of the burger menu.
+- After winning/loosing, player can restart the game.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## What it looks like
 
-### `npm test`
+Game is hosted on github : [Test our Minesweeper](https://aure-en.github.io/minesweeper/ "Our Minesweeper hosted on Github")
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<img
+  src="https://drive.google.com/uc?export=view&id=17jtZnRwH6wr_qaliSNah1Ci_cGZFHpI4"
+  gif
+  width="400px"
+  alt="Minesweeper demo"
+/>
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Requirements
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- React
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Cloning the repository
 
-### `npm run eject`
+```sh
+git clone git@github.com:Aure-en/lechat.git
+cd minesweeper
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Start
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```sh
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Dependancies
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- React
+- Styled-components
+- View more in the package.json
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Our app has been tested using jest and react-testing-libary.
