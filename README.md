@@ -47,7 +47,7 @@ cd minesweeper
 
 Or get the project repository by downloading ZIP file.
 
-### Install dependancies
+### Install dependencies
 
 Using npm:
 
@@ -75,7 +75,7 @@ Using yarn:
 yarn start
 ```
 
-## Dependancies
+## Dependencies
 
 - React
 - Styled-components
